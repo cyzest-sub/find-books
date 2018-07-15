@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Find Books</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <style class="cp-pen-styles">
+        body {
+            padding-top: 30px;
+        }
+        .product {
+            margin-bottom: 30px;
+        }
+        .product-inner {
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+            padding: 10px;
+        }
+        .product img {
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="wrapper" class="animate">
+
+    <ol class="breadcrumb">
+        <li><a href="/search">책검색</a></li>
+        <li><a href="/history"><b>최근검색히스토리</b></a></li>
+        <li><a href="/bookmark">북마크</a></li>
+        <li><a href="/logout">로그아웃</a></li>
+    </ol>
+
+    <div class="container">
+        <form name="searchForm" action="/history" method="get">
+            <div class="row" id="filter">
+                <input name="page" type="hidden" th:value="${paging.page - 1}" />
+            </div>
+        </form>
+        <div class="row" id="products">
+            <th:block th:each="searchHistoryInfo : ${searchHistoryInfos}">
+                <div class="col-sm-4 product">
+                    <div class="product-inner text-center">
+                        검색어: <span><b th:text="${searchHistoryInfo.query}"></b></span><br>
+                        Open API 타입: <span th:text="${searchHistoryInfo.openApiType.description}"></span><br>
+                        카테고리: <span th:text="${searchHistoryInfo.category != null ? searchHistoryInfo.category.description : ''}"></span><br>
+                        항목: <span th:text="${searchHistoryInfo.target != null ? searchHistoryInfo.target.description : ''}"></span><br>
+                        검색날짜: <span th:text="${searchHistoryInfo.regDate}"></span><br>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+
+        <nav aria-label="Page navigation" style="text-align: center">
+            <ul th:if="${paging != null}" class="pagination justify-content-center">
+                <li class="page-item" th:if="${paging.page > paging.pageRange}">
+                    <a class="page-link" th:href="${'javascrpit:goPage('+ paging.prevPageNo +');'}" aria-label="Previous">
+                        <span aria-hidden="true">prev</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="i: ${#numbers.sequence(paging.firstPage, paging.endPage)}">
+                    <a class="page-link" th:href="${paging.page != i ? 'javascript:goPage('+ i +');' : '#'}" th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:if="${paging.nextPageNo <= paging.totalCount}">
+                    <a class="page-link" th:href="${'javascript:goPage('+ paging.nextPageNo +');'}" aria-label="Next">
+                        <span aria-hidden="true">next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script>
+
+    function goPage(page) {
+        var searchForm = document.searchForm;
+        searchForm.page.value = page;
+        searchForm.submit();
+    }
+
+</script>
+</body>
+</html>

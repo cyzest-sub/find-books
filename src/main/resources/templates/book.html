@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Find Books</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <style class="cp-pen-styles">
+        body {
+            padding-top: 30px;
+        }
+        .product {
+            margin-bottom: 30px;
+        }
+        .product-inner {
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+            padding: 10px;
+        }
+        .product img {
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="wrapper" class="animate">
+
+    <ol class="breadcrumb">
+        <li><a href="/search"><b>책검색</b></a></li>
+        <li><a href="/history">최근검색히스토리</a></li>
+        <li><a href="/bookmark">북마크</a></li>
+        <li><a href="/logout">로그아웃</a></li>
+    </ol>
+
+    <div class="container">
+        <th:block th:if="${bookInfo != null}">
+            <div class="row" id="products">
+                    <div class="product">
+                        <div class="product-inner text-center">
+                            <img th:src="${bookInfo.thumbnail}" /><br>
+                            제목: <span th:text="${bookInfo.title}"></span><br>
+                            ISBN: <span th:text="${bookInfo.isbn}"></span><br>
+                            저자:
+                            <th:block th:each="author : ${bookInfo.getAuthors()}">
+                                <span th:text="${'[' + author + ']'}"></span>
+                            </th:block>
+                            <br>
+                            가격: <span th:text="${bookInfo.price + '원'}"></span><br>
+                            출판일자: <span th:text="${bookInfo.datetime}"></span><br>
+                            출판사: <span th:text="${bookInfo.publisher}"></span><br>
+                            번역:
+                            <th:block th:each="translator : ${bookInfo.getTranslators()}">
+                                <span th:text="${'[' + translator + ']'}"></span>
+                            </th:block>
+                            <br>
+                            카테고리: <span th:text="${bookInfo.category}"></span><br>
+                            URL: <a th:href="${bookInfo.url}"></a><br>
+                            내용: <span th:text="${bookInfo.contents}"></span><br>
+                            <a href="javascript:doBookMark();">[북마크]</a>
+                        </div>
+                    </div>
+            </div>
+        </th:block>
+
+    </div>
+
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+    function doBookMark() {
+
+        $.ajax({
+            url: "/bookmark",
+            type: "POST",
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: 'text',
+            data: jQuery.param({
+                openApiType: [[${openApiType.code}]],
+                isbn: [[${bookInfo.isbn}]]
+            }),
+            success: function () {
+                alert("북마크 되었습니다.");
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+        return false;
+    }
+
+    /*]]>*/
+
+</script>
+</body>
+</html>

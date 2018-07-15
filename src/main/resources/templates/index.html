@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Find Books</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+<body>
+<div class="login-page">
+    <div class="form">
+        <form class="register-form" onsubmit="return register();">
+            <input type="text" id="reg_id" placeholder="id" />
+            <input type="password" id="reg_password" placeholder="password" />
+            <input type="password" id="confirm_password" placeholder="confirm password" />
+            <button type="submit">create</button>
+            <p class="message">Already registered? <a href="#">Sign In</a></p>
+        </form>
+        <form class="login-form" action="/login" method="post">
+            <input type="text" placeholder="id" id="id" name="username" value="" />
+            <input type="password" placeholder="password" id="password" name="password" value="" />
+            <button type="submit">login</button>
+            <p class="message">Not registered? <a href="#">Create an account</a></p>
+        </form>
+
+    </div>
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>

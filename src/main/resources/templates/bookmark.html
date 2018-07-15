@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Find Books</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <style class="cp-pen-styles">
+        body {
+            padding-top: 30px;
+        }
+        .product {
+            margin-bottom: 30px;
+        }
+        .product-inner {
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+            padding: 10px;
+        }
+        .product img {
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="wrapper" class="animate">
+
+    <ol class="breadcrumb">
+        <li><a href="/search">책검색</a></li>
+        <li><a href="/history">최근검색히스토리</a></li>
+        <li><a href="/bookmark"><b>북마크</b></a></li>
+        <li><a href="/logout">로그아웃</a></li>
+    </ol>
+
+    <div class="container">
+        <form name="searchForm" action="/bookmark" method="get">
+            <div class="row" id="filter">
+                <input name="page" type="hidden" th:value="${paging.page - 1}" />
+                <div class="form-group col-sm-3 col-xs-6">
+                    정렬순
+                    <select name="sort" data-filter="price" class="filter-price filter form-control" onchange="javascript:goRefresh();">
+                            <option value="regDate,desc" th:selected="${'regDate'.equals('')}">시간순</option>
+                            <option value="title,asc" th:selected="${'title'.equals('')}">이름순</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <div class="row" id="products">
+            <th:block th:each="bookMarkInfo : ${bookMarkInfos}">
+                <div class="col-sm-4 product">
+                    <div class="product-inner text-center">
+                        <a th:href="${'/books/' + bookMarkInfo.openApiType.code + '/' + bookMarkInfo.isbn }">
+                            <img th:src="${bookMarkInfo.thumbnail}" />
+                        </a><br>
+                        <a th:href="${'/books/' + bookMarkInfo.openApiType.code + '/' + bookMarkInfo.isbn }">
+                        제목: <span th:text="${bookMarkInfo.title}"></span>
+                        </a><br>
+                        Open API 타입: <span><b th:text="${bookMarkInfo.openApiType.description}"></b></span><br>
+                        ISBN: <span th:text="${bookMarkInfo.isbn}"></span><br>
+                        북마크날짜: <span th:text="${bookMarkInfo.regDate}"></span><br>
+                        <a th:href="${'javascript:deleteBookMark('+ bookMarkInfo.id +');'}">[북마크삭제]</a>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+
+        <nav aria-label="Page navigation" style="text-align: center">
+            <ul th:if="${paging != null}" class="pagination justify-content-center">
+                <li class="page-item" th:if="${paging.page > paging.pageRange}">
+                    <a class="page-link" th:href="${'javascrpit:goPage('+ paging.prevPageNo +');'}" aria-label="Previous">
+                        <span aria-hidden="true">prev</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="i: ${#numbers.sequence(paging.firstPage, paging.endPage)}">
+                    <a class="page-link" th:href="${paging.page != i ? 'javascript:goPage('+ i +');' : '#'}" th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:if="${paging.nextPageNo <= paging.totalCount}">
+                    <a class="page-link" th:href="${'javascript:goPage('+ paging.nextPageNo +');'}" aria-label="Next">
+                        <span aria-hidden="true">next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script>
+
+    function goRefresh() {
+        var searchForm = document.searchForm;
+        searchForm.page.value = 1;
+        searchForm.submit();
+    }
+
+    function goPage(page) {
+        var searchForm = document.searchForm;
+        searchForm.page.value = page;
+        searchForm.submit();
+    }
+
+    function deleteBookMark(id) {
+
+        $.ajax({
+            url: "/bookmark/" + id,
+            type: "DELETE",
+            dataType: 'text',
+            success: function () {
+                alert("삭제되었습니다.");
+                location.reload();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+        return false;
+    }
+
+</script>
+</body>
+</html>

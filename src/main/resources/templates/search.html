@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Find Books</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <style class="cp-pen-styles">
+        body {
+            padding-top: 30px;
+        }
+        .product {
+            margin-bottom: 30px;
+        }
+        .product-inner {
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+            padding: 10px;
+        }
+        .product img {
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="wrapper" class="animate">
+
+    <ol class="breadcrumb">
+        <li><a href="/search"><b>책검색</b></a></li>
+        <li><a href="/history">최근검색히스토리</a></li>
+        <li><a href="/bookmark">북마크</a></li>
+        <li><a href="/logout">로그아웃</a></li>
+    </ol>
+
+    <div class="container">
+        <form name="searchForm" action="/search" method="get">
+        <div class="row" id="search">
+                <div class="form-group col-xs-9">
+                    <input name="page" type="hidden" th:value="${bookSearchParam.page}" />
+                    <input name="query" class="form-control" type="text" th:value="${bookSearchParam.query}" placeholder="Search" />
+                </div>
+                <div class="form-group col-xs-3">
+                    <button type="submit" class="btn btn-block btn-primary">Search</button>
+                </div>
+        </div>
+        <div class="row" id="filter">
+                <div class="form-group col-sm-3 col-xs-6">
+                    Open API 타입
+                    <select name="openApiType" data-filter="make" class="filter-make filter form-control">
+                        <th:block th:each="openApiType : ${openApiTypes}">
+                            <option th:value="${openApiType.code}"
+                                    th:text="${openApiType.description}"
+                                    th:selected="${openApiType.equals(bookSearchParam.openApiType)}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="form-group col-sm-3 col-xs-6">
+                    카테고리별
+                    <select name="categoryCode" data-filter="model" class="filter-model filter form-control">
+                        <option value="">전체</option>
+                        <th:block th:each="bookSearchCategory : ${bookSearchCategories}">
+                            <option th:value="${bookSearchCategory.code}"
+                                    th:text="${bookSearchCategory.description}"
+                                    th:selected="${bookSearchCategory.code.equals(bookSearchParam.categoryCode)}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="form-group col-sm-3 col-xs-6">
+                    항목별
+                    <select name="targetCode" data-filter="type" class="filter-type filter form-control">
+                        <option value="">전체</option>
+                        <th:block th:each="bookSearchTarget : ${bookSearchTargets}">
+                            <option th:value="${bookSearchTarget.code}"
+                                    th:text="${bookSearchTarget.description}"
+                                    th:selected="${bookSearchTarget.code.equals(bookSearchParam.targetCode)}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="form-group col-sm-3 col-xs-6">
+                    정렬순
+                    <select name="sort" data-filter="price" class="filter-price filter form-control">
+                        <th:block th:each="bookSearchSort : ${bookSearchSorts}">
+                            <option th:value="${bookSearchSort.code}"
+                                    th:text="${bookSearchSort.description}"
+                                    th:selected="${bookSearchSort.equals(bookSearchParam.sort)}"></option>
+                        </th:block>
+                    </select>
+                </div>
+        </div>
+        </form>
+        <th:block th:if="${bookSearchResult != null}">
+            <div class="row" id="products">
+                <th:block th:each="bookInfo : ${bookSearchResult.getBookInfos()}">
+                    <div class="col-sm-4 product">
+                        <div class="product-inner text-center">
+                            <a th:href="${''.equals(bookInfo.isbn) ? '#' : '/books/' + bookSearchParam.openApiType.code + '/' + bookInfo.isbn }">
+                                <img th:src="${bookInfo.thumbnail}" />
+                            </a><br>
+                            <a th:href="${''.equals(bookInfo.isbn) ? '#' : '/books/' + bookSearchParam.openApiType.code + '/' + bookInfo.isbn }">
+                            제목: <span th:text="${bookInfo.title}"></span>
+                            </a><br>
+                            ISBN: <span th:text="${bookInfo.isbn}"></span><br>
+                            저자:
+                            <th:block th:each="author : ${bookInfo.getAuthors()}">
+                                <span th:text="${'[' + author + ']'}"></span>
+                            </th:block>
+                            <br>
+                            가격: <span th:text="${bookInfo.price + '원'}"></span>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </th:block>
+
+        <nav aria-label="Page navigation" style="text-align: center">
+            <ul th:if="${paging != null}" class="pagination justify-content-center">
+                <li class="page-item" th:if="${paging.page > paging.pageRange}">
+                    <a class="page-link" th:href="${'javascrpit:goPage('+ paging.prevPageNo +');'}" aria-label="Previous">
+                        <span aria-hidden="true">prev</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="i: ${#numbers.sequence(paging.firstPage, paging.endPage)}">
+                    <a class="page-link" th:href="${paging.page != i ? 'javascript:goPage('+ i +');' : '#'}" th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:if="${paging.nextPageNo <= paging.totalCount}">
+                    <a class="page-link" th:href="${'javascript:goPage('+ paging.nextPageNo +');'}" aria-label="Next">
+                        <span aria-hidden="true">next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script>
+
+    function goPage(page) {
+        var searchForm = document.searchForm;
+        searchForm.page.value = page;
+        searchForm.submit();
+    }
+
+</script>
+</body>
+</html>
