@@ -10,7 +10,7 @@
 
 ### Back-end 추가 라이브러리
 1. OkHttp3 - Rest API 커넥션 용도
-1. Lombok - Getter Setter 자동생성 용도
+1. Lombok - Boilerplate 코드 자동생성 용도
 1. ModelMapper - 오브젝트 변환 용도
 1. thymeleaf3 - 화면 뷰 템플릿 용도
 
