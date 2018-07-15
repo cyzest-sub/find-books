@@ -1,9 +1,6 @@
 package com.cyzest.findbooks.service;
 
-import com.cyzest.findbooks.searcher.BookInfo;
-import com.cyzest.findbooks.searcher.BookSearchParam;
-import com.cyzest.findbooks.searcher.BookSearchResult;
-import com.cyzest.findbooks.searcher.OpenApiBookSearchHelper;
+import com.cyzest.findbooks.searcher.*;
 import groovy.util.logging.Slf4j;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

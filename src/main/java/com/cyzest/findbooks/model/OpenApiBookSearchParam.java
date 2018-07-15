@@ -2,7 +2,7 @@ package com.cyzest.findbooks.model;
 
 import com.cyzest.findbooks.searcher.BookSearchParam;
 import com.cyzest.findbooks.searcher.BookSearchSort;
-import com.cyzest.findbooks.service.OpenApiType;
+import com.cyzest.findbooks.searcher.OpenApiType;
 import lombok.Data;
 
 @Data

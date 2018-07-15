@@ -1,7 +1,6 @@
 package com.cyzest.findbooks.searcher;
 
 import com.cyzest.findbooks.searcher.kakao.KakaoOpenApiBookSearcher;
-import com.cyzest.findbooks.service.OpenApiType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 

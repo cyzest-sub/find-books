@@ -1,7 +1,7 @@
 package com.cyzest.findbooks.dao;
 
 import com.cyzest.findbooks.searcher.BookSearchSort;
-import com.cyzest.findbooks.service.OpenApiType;
+import com.cyzest.findbooks.searcher.OpenApiType;
 import lombok.Data;
 
 import javax.persistence.*;

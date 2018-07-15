@@ -4,7 +4,7 @@ import com.cyzest.findbooks.common.EnumCodePropertyEditor;
 import com.cyzest.findbooks.common.Paging;
 import com.cyzest.findbooks.model.BookMarkResult;
 import com.cyzest.findbooks.service.BookMarkService;
-import com.cyzest.findbooks.service.OpenApiType;
+import com.cyzest.findbooks.searcher.OpenApiType;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;

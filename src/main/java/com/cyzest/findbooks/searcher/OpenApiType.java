@@ -1,4 +1,4 @@
-package com.cyzest.findbooks.service;
+package com.cyzest.findbooks.searcher;
 
 import com.cyzest.findbooks.common.EnumCode;
 

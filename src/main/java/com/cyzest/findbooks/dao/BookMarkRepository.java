@@ -1,6 +1,6 @@
 package com.cyzest.findbooks.dao;
 
-import com.cyzest.findbooks.service.OpenApiType;
+import com.cyzest.findbooks.searcher.OpenApiType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

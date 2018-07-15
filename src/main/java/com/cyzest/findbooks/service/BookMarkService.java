@@ -7,6 +7,7 @@ import com.cyzest.findbooks.dao.UserRepository;
 import com.cyzest.findbooks.model.BookMarkInfo;
 import com.cyzest.findbooks.model.BookMarkResult;
 import com.cyzest.findbooks.searcher.BookInfo;
+import com.cyzest.findbooks.searcher.OpenApiType;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

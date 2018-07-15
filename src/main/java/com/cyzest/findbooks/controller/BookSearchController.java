@@ -8,7 +8,7 @@ import com.cyzest.findbooks.searcher.BookSearchSort;
 import com.cyzest.findbooks.searcher.OpenApiBookSearchHelper;
 import com.cyzest.findbooks.service.BookSearchHistoryService;
 import com.cyzest.findbooks.service.BookSearchService;
-import com.cyzest.findbooks.service.OpenApiType;
+import com.cyzest.findbooks.searcher.OpenApiType;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
