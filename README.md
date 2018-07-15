@@ -3,9 +3,9 @@
 ### OpenAPI를 활용한 책 검색 서비스
 
 1. Java 8 버전을 사용
-1. spring-boot 1.5 사용 (Spring Framework 4.3 기반)
-1. spring-data-jpa 사용
-1. spring-boot 에서 제공하는 임베디드 톰캣 사용
+1. Spring Boot 1.5 사용 (Spring Framework 4.3 기반)
+1. Spring Data JPA 사용
+1. Spring Boot 에서 제공하는 임베디드 톰캣 사용
 1. H2 DB 사용
 
 ### Back-end 추가 라이브러리
