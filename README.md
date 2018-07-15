@@ -30,7 +30,7 @@ $ cd find-books
 $ mvn clean compile
 $ mvn spring-boot:run
 ```
-
+* http://localhost:8080 으로 접속하여 확인
 * 포트는 8080 을 사용합니다. (application.properties 에서 수정 가능)
 
 ### 테스트 (Junit)
