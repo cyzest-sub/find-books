@@ -1,5 +1,6 @@
 package com.cyzest.findbooks.searcher;
 
+import com.cyzest.findbooks.FindBooksProperties;
 import com.cyzest.findbooks.searcher.kakao.KakaoOpenApiBookSearcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -13,8 +14,10 @@ public class OpenApiBookSearchHelper {
 
     private final Map<OpenApiType, OpenApiBookSearcher> openApiBookSearcherMap = new ConcurrentHashMap<>();
 
-    public OpenApiBookSearchHelper(RestTemplate restTemplate) {
-        openApiBookSearcherMap.put(OpenApiType.KAKAO, new KakaoOpenApiBookSearcher(restTemplate,"1770b0144f386077715fa79af0e9d7cb"));
+    public OpenApiBookSearchHelper(RestTemplate restTemplate, FindBooksProperties findBooksProperties) {
+        openApiBookSearcherMap.put(
+                OpenApiType.KAKAO,
+                new KakaoOpenApiBookSearcher(restTemplate, findBooksProperties.getSearcher().getKakaoApiKey()));
     }
 
     public List<BookSearchCategory> getBookSeachCategoriesByOpenApiType(OpenApiType openApiType) {
