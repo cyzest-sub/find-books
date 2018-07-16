@@ -43,8 +43,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         return Optional.ofNullable(userRepository.findById(id))
-                .map(user -> new DefaultAuthUser(user))
-                .orElseThrow(() -> new UsernameNotFoundException(id + " not found"));
+                .map(DefaultAuthUser::new).orElseThrow(() -> new UsernameNotFoundException(id + " not found"));
     }
 
 }
