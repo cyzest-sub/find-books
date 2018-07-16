@@ -103,16 +103,7 @@ public class BookMarkService {
             bookMarkResult.setTotalCount((int)bookMarksPage.getTotalElements());
 
             if (bookMarks != null) {
-                bookMarkResult.setBookMarkInfos(bookMarks.stream().map(bookMark -> {
-                    BookMarkInfo bookMarkInfo = new BookMarkInfo();
-                    bookMarkInfo.setId(bookMark.getId());
-                    bookMarkInfo.setOpenApiType(bookMark.getOpenApiType());
-                    bookMarkInfo.setIsbn(bookMark.getIsbn());
-                    bookMarkInfo.setTitle(bookMark.getTitle());
-                    bookMarkInfo.setThumbnail(bookMark.getThumbnail());
-                    bookMarkInfo.setRegDate(bookMark.getRegDate());
-                    return bookMarkInfo;
-                }).collect(Collectors.toList()));
+                bookMarkResult.setBookMarkInfos(bookMarks.stream().map(BookMarkInfo::new).collect(Collectors.toList()));
             }
         }
 
