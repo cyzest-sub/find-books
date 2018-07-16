@@ -43,6 +43,7 @@ $ mvn clean compile test
 
 ```
 $ mvn clean compile
-$ mvn pakage
+$ mvn package
 $ cd target
+$ java -jar find-books-1.0.0.jar
 ```
