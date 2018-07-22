@@ -7,7 +7,8 @@ import java.util.List;
 
 public enum OpenApiType implements EnumCode {
 
-    KAKAO("kakao", "카카오");
+    KAKAO("kakao", "카카오"),
+    NAVER("naver", "네이버");
 
     private String code;
     private String description;
@@ -27,7 +28,7 @@ public enum OpenApiType implements EnumCode {
     }
 
     public static List<OpenApiType> getOpenApiTypes() {
-        return Arrays.asList(OpenApiType.KAKAO);
+        return Arrays.asList(OpenApiType.KAKAO, OpenApiType.NAVER);
     }
 
 }
