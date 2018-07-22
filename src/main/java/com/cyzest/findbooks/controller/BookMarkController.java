@@ -50,7 +50,7 @@ public class BookMarkController {
     }
 
     @GetMapping("/bookmark")
-    public String getSearchHistories(
+    public String getBookMarks(
             Authentication authentication, Model model,
             @PageableDefault(size = 9, page = 1, sort = "regDate", direction = Sort.Direction.DESC) Pageable pageable) {
 

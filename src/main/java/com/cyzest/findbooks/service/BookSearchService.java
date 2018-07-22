@@ -1,8 +1,8 @@
 package com.cyzest.findbooks.service;
 
 import com.cyzest.findbooks.searcher.*;
-import groovy.util.logging.Slf4j;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Slf4j
