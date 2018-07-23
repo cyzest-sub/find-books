@@ -43,6 +43,10 @@ public class OpenApiBookSearchHelper {
 
     public OpenApiBookSearcher getOpenApiBookSearcher(OpenApiType openApiType) {
 
+        if (openApiType == null) {
+            throw new IllegalArgumentException("openApiType must not be null");
+        }
+
         OpenApiBookSearcher openApiBookSearcher = openApiBookSearcherMap.get(openApiType);
 
         if (openApiBookSearcher == null) {
