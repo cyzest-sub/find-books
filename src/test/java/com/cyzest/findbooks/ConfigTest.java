@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class ConfigTestCase {
+public class ConfigTest {
 
     @Autowired
     private OkHttp3ClientHttpRequestFactory okHttp3ClientHttpRequestFactory;

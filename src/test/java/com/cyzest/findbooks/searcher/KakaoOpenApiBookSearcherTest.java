@@ -1,7 +1,7 @@
 package com.cyzest.findbooks.searcher;
 
 import com.cyzest.findbooks.FindBooksProperties;
-import com.cyzest.findbooks.searcher.naver.NaverOpenApiBookSearcher;
+import com.cyzest.findbooks.searcher.kakao.KakaoOpenApiBookSearcher;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,9 +16,9 @@ import javax.annotation.PostConstruct;
 @Slf4j
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class NaverOpenApiBookSearcherTestCase {
+public class KakaoOpenApiBookSearcherTest {
 
-    private NaverOpenApiBookSearcher naverOpenApiBookSearcher;
+    private KakaoOpenApiBookSearcher kakaoOpenApiBookSearcher;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -28,16 +28,13 @@ public class NaverOpenApiBookSearcherTestCase {
 
     @PostConstruct
     public void init() {
-        naverOpenApiBookSearcher = new NaverOpenApiBookSearcher(
-                restTemplate,
-                findBooksProperties.getSearcher().getNaverClientId(),
-                findBooksProperties.getSearcher().getNaverClientSecret()
-        );
+        kakaoOpenApiBookSearcher = new KakaoOpenApiBookSearcher(
+                restTemplate, findBooksProperties.getSearcher().getKakaoApiKey());
     }
 
     @Test
     public void 검색파라미터가_없을경우_결과를_만족하는가() {
-        BookSearchResult bookSearchResult = naverOpenApiBookSearcher.search(null);
+        BookSearchResult bookSearchResult = kakaoOpenApiBookSearcher.search(null);
         Assert.assertNotNull(bookSearchResult);
         Assert.assertEquals(bookSearchResult.getTotalCount(), 0);
         Assert.assertNull(bookSearchResult.getBookInfos());
@@ -45,14 +42,14 @@ public class NaverOpenApiBookSearcherTestCase {
 
     @Test(expected = IllegalArgumentException.class)
     public void 빈_검색파라미터의_경우_결과를_만족하는가() {
-        naverOpenApiBookSearcher.search(new BookSearchParam());
+        kakaoOpenApiBookSearcher.search(new BookSearchParam());
     }
 
     @Test
     public void 키워드_검색_결과를_만족하는가() {
         BookSearchParam bookSearchParam = new BookSearchParam();
-        bookSearchParam.setQuery("자바");
-        BookSearchResult bookSearchResult = naverOpenApiBookSearcher.search(bookSearchParam);
+        bookSearchParam.setQuery("카카오");
+        BookSearchResult bookSearchResult = kakaoOpenApiBookSearcher.search(bookSearchParam);
         Assert.assertTrue(bookSearchResult.getTotalCount() > 0);
         Assert.assertNotNull(bookSearchResult.getBookInfos());
         bookSearchResult.getBookInfos().forEach(bookInfo -> log.info("BookInfo : {}", bookInfo.getIsbn()));
@@ -61,21 +58,21 @@ public class NaverOpenApiBookSearcherTestCase {
     @Test
     public void ISBN_타겟_검색_결과를_만족하는가() {
         BookSearchParam bookSearchParam = new BookSearchParam();
-        bookSearchParam.setQuery("9791163030034");
-        bookSearchParam.setTargetCode("d_isbn");
-        BookSearchResult bookSearchResult = naverOpenApiBookSearcher.search(bookSearchParam);
+        bookSearchParam.setQuery("9788950974329");
+        bookSearchParam.setTargetCode("isbn");
+        BookSearchResult bookSearchResult = kakaoOpenApiBookSearcher.search(bookSearchParam);
         Assert.assertTrue(bookSearchResult.getTotalCount() > 0);
         Assert.assertNotNull(bookSearchResult.getBookInfos());
         Assert.assertNotNull(bookSearchResult.getBookInfos().get(0));
-        Assert.assertEquals(bookSearchResult.getBookInfos().get(0).getIsbn(), "9791163030034");
+        Assert.assertEquals(bookSearchResult.getBookInfos().get(0).getIsbn(), "9788950974329");
         bookSearchResult.getBookInfos().forEach(bookInfo -> log.info("BookInfo : {}", bookInfo.getIsbn()));
     }
 
     @Test
     public void ISBN_개별_검색_결과를_만족하는가() {
-        BookInfo bookInfo = naverOpenApiBookSearcher.searchByIsbn("9791163030034");
+        BookInfo bookInfo = kakaoOpenApiBookSearcher.searchByIsbn("9788950974329");
         Assert.assertNotNull(bookInfo);
-        Assert.assertEquals(bookInfo.getIsbn(), "9791163030034");
+        Assert.assertEquals(bookInfo.getIsbn(), "9788950974329");
         log.info("BookInfo : {}", bookInfo.getIsbn());
     }
 
