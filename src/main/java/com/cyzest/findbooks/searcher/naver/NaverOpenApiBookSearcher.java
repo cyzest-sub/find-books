@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -43,7 +44,7 @@ public class NaverOpenApiBookSearcher implements OpenApiBookSearcher {
     private final String CLIENT_SECRET_HEADER_NAME = "X-Naver-Client-Secret";
 
     private final String SEARCH_BOOKS_URI = "/v1/search/book.xml";
-    private final String SEARCH_BOOKS_ADVANCED_URI = "/v2/search/book_adv.xml";
+    private final String SEARCH_BOOKS_ADVANCED_URI = "/v1/search/book_adv.xml";
 
     public NaverOpenApiBookSearcher(RestTemplate restTemplate, String clientId, String clientSecret) {
 
@@ -136,9 +137,12 @@ public class NaverOpenApiBookSearcher implements OpenApiBookSearcher {
             urlBuilder.queryParam("start", size * (page - 1) + 1);
             urlBuilder.queryParam("display", size);
 
+            URI requestUri = urlBuilder.build().encode().toUri();
+
+            log.debug("Request URI : {}", requestUri);
+
             ResponseEntity<NaverBookSearchResult> responseEntity = restTemplate.exchange(
-                    urlBuilder.build().encode().toUri(), HttpMethod.GET,
-                    new HttpEntity<>(getNaverHttpHeaders()), NaverBookSearchResult.class);
+                    requestUri, HttpMethod.GET, new HttpEntity<>(getNaverHttpHeaders()), NaverBookSearchResult.class);
 
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
 
@@ -167,9 +171,12 @@ public class NaverOpenApiBookSearcher implements OpenApiBookSearcher {
 
         urlBuilder.queryParam("d_isbn", isbn);
 
+        URI requestUri = urlBuilder.build().encode().toUri();
+
+        log.debug("Request URI : {}", requestUri);
+
         ResponseEntity<NaverBookSearchResult> responseEntity = restTemplate.exchange(
-                urlBuilder.build().encode().toUri(), HttpMethod.GET,
-                new HttpEntity<>(getNaverHttpHeaders()), NaverBookSearchResult.class);
+                requestUri, HttpMethod.GET, new HttpEntity<>(getNaverHttpHeaders()), NaverBookSearchResult.class);
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
 

@@ -49,18 +49,34 @@ public class NaverOpenApiBookSearcherTestCase {
     }
 
     @Test
-    public void 자바_키워드_검색_결과를_만족하는가() {
+    public void 키워드_검색_결과를_만족하는가() {
         BookSearchParam bookSearchParam = new BookSearchParam();
         bookSearchParam.setQuery("자바");
         BookSearchResult bookSearchResult = naverOpenApiBookSearcher.search(bookSearchParam);
         Assert.assertTrue(bookSearchResult.getTotalCount() > 0);
         Assert.assertNotNull(bookSearchResult.getBookInfos());
+        bookSearchResult.getBookInfos().forEach(bookInfo -> log.info("BookInfo : {}", bookInfo.getIsbn()));
     }
 
     @Test
-    public void ISBN_검색_결과를_만족하는가() {
+    public void ISBN_타겟_검색_결과를_만족하는가() {
+        BookSearchParam bookSearchParam = new BookSearchParam();
+        bookSearchParam.setQuery("9791163030034");
+        bookSearchParam.setTargetCode("d_isbn");
+        BookSearchResult bookSearchResult = naverOpenApiBookSearcher.search(bookSearchParam);
+        Assert.assertTrue(bookSearchResult.getTotalCount() > 0);
+        Assert.assertNotNull(bookSearchResult.getBookInfos());
+        Assert.assertNotNull(bookSearchResult.getBookInfos().get(0));
+        Assert.assertEquals(bookSearchResult.getBookInfos().get(0).getIsbn(), "9791163030034");
+        bookSearchResult.getBookInfos().forEach(bookInfo -> log.info("BookInfo : {}", bookInfo.getIsbn()));
+    }
+
+    @Test
+    public void ISBN_개별_검색_결과를_만족하는가() {
         BookInfo bookInfo = naverOpenApiBookSearcher.searchByIsbn("9791163030034");
         Assert.assertNotNull(bookInfo);
+        Assert.assertEquals(bookInfo.getIsbn(), "9791163030034");
+        log.info("BookInfo : {}", bookInfo.getIsbn());
     }
 
 }
