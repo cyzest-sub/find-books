@@ -46,7 +46,7 @@
         <div class="row" id="filter">
                 <div class="form-group col-sm-3 col-xs-6">
                     Open API 타입
-                    <select name="openApiType" data-filter="make" class="filter-make filter form-control">
+                    <select name="openApiType" data-filter="make" class="filter-make filter form-control" onchange="javascript:changeOpenApiType();">
                         <th:block th:each="openApiType : ${openApiTypes}">
                             <option th:value="${openApiType.code}"
                                     th:text="${openApiType.description}"
@@ -141,6 +141,16 @@
     function goPage(page) {
         var searchForm = document.searchForm;
         searchForm.page.value = page;
+        searchForm.submit();
+    }
+
+    function changeOpenApiType() {
+        var searchForm = document.searchForm;
+        searchForm.page.value = 1;
+        searchForm.categoryCode.value = "";
+        searchForm.targetCode.value = "";
+        searchForm.sort.value = "";
+        searchForm.query.value = "";
         searchForm.submit();
     }
 
