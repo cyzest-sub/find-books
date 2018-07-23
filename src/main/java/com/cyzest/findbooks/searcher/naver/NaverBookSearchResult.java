@@ -8,6 +8,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "rss")
 public class NaverBookSearchResult {
 
-    private NaverBookSearchChannel channel;
+    private NaverBookChannel channel;
 
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class NaverBookSearchChannel {
+public class NaverBookChannel {
 
     private String title;
     private String link;

@@ -146,11 +146,11 @@ public class NaverOpenApiBookSearcher implements OpenApiBookSearcher {
 
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
 
-                NaverBookSearchChannel naverBookSearchChannel = responseEntity.getBody().getChannel();
+                NaverBookChannel naverBookChannel = responseEntity.getBody().getChannel();
 
-                bookSearchResult.setTotalCount(naverBookSearchChannel.getTotal());
+                bookSearchResult.setTotalCount(naverBookChannel.getTotal());
 
-                List<NaverBookInfo> naverBookInfos = naverBookSearchChannel.getItems();
+                List<NaverBookInfo> naverBookInfos = naverBookChannel.getItems();
 
                 if (!CollectionUtils.isEmpty(naverBookInfos)) {
                     bookSearchResult.setBookInfos(
