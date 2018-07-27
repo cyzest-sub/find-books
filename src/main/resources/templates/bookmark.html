@@ -35,12 +35,15 @@
     <div class="container">
         <form name="searchForm" action="/bookmark" method="get">
             <div class="row" id="filter">
-                <input name="page" type="hidden" th:value="${paging.page - 1}" />
+                <input name="page" type="hidden" th:value="${pagingParam.page}" />
                 <div class="form-group col-sm-3 col-xs-6">
                     정렬순
                     <select name="sort" data-filter="price" class="filter-price filter form-control" onchange="javascript:goRefresh();">
-                            <option value="regDate,desc" th:selected="${'regDate'.equals('')}">시간순</option>
-                            <option value="title,asc" th:selected="${'title'.equals('')}">이름순</option>
+                        <th:block th:each="bookMarkSort : ${bookMarkSorts}">
+                            <option th:value="${bookMarkSort.code}"
+                                    th:text="${bookMarkSort.description}"
+                                    th:selected="${bookMarkSort.equals(pagingParam.sort)}"></option>
+                        </th:block>
                     </select>
                 </div>
             </div>

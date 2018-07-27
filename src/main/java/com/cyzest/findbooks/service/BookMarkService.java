@@ -5,6 +5,7 @@ import com.cyzest.findbooks.dao.BookMarkRepository;
 import com.cyzest.findbooks.dao.User;
 import com.cyzest.findbooks.dao.UserRepository;
 import com.cyzest.findbooks.model.BookMarkInfo;
+import com.cyzest.findbooks.model.BookMarkPagingParam;
 import com.cyzest.findbooks.model.BookMarkResult;
 import com.cyzest.findbooks.searcher.BookInfo;
 import com.cyzest.findbooks.searcher.OpenApiType;
@@ -12,7 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -85,7 +85,7 @@ public class BookMarkService {
     }
 
     @Transactional(readOnly = true)
-    public BookMarkResult getBookMarksByUserId(String userId, Pageable pageable) {
+    public BookMarkResult getBookMarksByUserId(String userId, BookMarkPagingParam pagingParam) {
 
         BookMarkResult bookMarkResult = new BookMarkResult();
 
@@ -94,7 +94,7 @@ public class BookMarkService {
         if (user != null) {
 
             PageRequest pageRequest = new PageRequest(
-                    pageable.getPageNumber() - 1, pageable.getPageSize(), pageable.getSort());
+                    pagingParam.getPage() - 1, pagingParam.getSize(), pagingParam.getSort().getSort());
 
             Page<BookMark> bookMarksPage = bookMarkRepository.findByUser(user, pageRequest);
 

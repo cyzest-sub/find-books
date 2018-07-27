@@ -2,14 +2,13 @@ package com.cyzest.findbooks.controller;
 
 import com.cyzest.findbooks.common.EnumCodePropertyEditor;
 import com.cyzest.findbooks.common.Paging;
+import com.cyzest.findbooks.model.BookMarkPagingParam;
 import com.cyzest.findbooks.model.BookMarkResult;
-import com.cyzest.findbooks.service.BookMarkService;
+import com.cyzest.findbooks.model.BookMarkSort;
 import com.cyzest.findbooks.searcher.OpenApiType;
+import com.cyzest.findbooks.service.BookMarkService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,12 +23,14 @@ import java.beans.PropertyEditor;
 public class BookMarkController {
 
     private final PropertyEditor openApiTypePropertyEditor = new EnumCodePropertyEditor<>(OpenApiType.class);
+    private final PropertyEditor bookMarkSortPropertyEditor = new EnumCodePropertyEditor<>(BookMarkSort.class);
 
     private BookMarkService bookMarkService;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(OpenApiType.class, openApiTypePropertyEditor);
+        binder.registerCustomEditor(BookMarkSort.class, bookMarkSortPropertyEditor);
     }
 
     @PostMapping("/bookmark")
@@ -50,14 +51,15 @@ public class BookMarkController {
     }
 
     @GetMapping("/bookmark")
-    public String getBookMarks(
-            Authentication authentication, Model model,
-            @PageableDefault(size = 9, page = 1, sort = "regDate", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String getBookMarks(@ModelAttribute BookMarkPagingParam pagingParam, Authentication authentication, Model model) {
 
-        BookMarkResult bookMarkResult = bookMarkService.getBookMarksByUserId(authentication.getName(), pageable);
+        model.addAttribute("bookMarkSorts", BookMarkSort.getBookMarkSorts());
 
-        model.addAttribute("paging", new Paging(pageable.getPageNumber(), pageable.getPageSize(), bookMarkResult.getTotalCount()));
+        BookMarkResult bookMarkResult = bookMarkService.getBookMarksByUserId(authentication.getName(), pagingParam);
+
+        model.addAttribute("paging", new Paging(pagingParam.getPage(), pagingParam.getSize(), bookMarkResult.getTotalCount()));
         model.addAttribute("bookMarkInfos", bookMarkResult.getBookMarkInfos());
+        model.addAttribute("pagingParam", pagingParam);
 
         return "bookmark";
     }
