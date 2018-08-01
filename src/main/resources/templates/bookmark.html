@@ -77,7 +77,7 @@
                 <li class="page-item" th:each="i: ${#numbers.sequence(paging.firstPage, paging.endPage)}">
                     <a class="page-link" th:href="${paging.page != i ? 'javascript:goPage('+ i +');' : '#'}" th:text="${i}"></a>
                 </li>
-                <li class="page-item" th:if="${paging.nextPageNo <= paging.totalCount}">
+                <li class="page-item" th:if="${paging.nextPageNo <= paging.totalPage}">
                     <a class="page-link" th:href="${'javascript:goPage('+ paging.nextPageNo +');'}" aria-label="Next">
                         <span aria-hidden="true">next</span>
                     </a>

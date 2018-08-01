@@ -44,8 +44,8 @@
                     <div class="product-inner text-center">
                         검색어: <span><b th:text="${searchHistoryInfo.query}"></b></span><br>
                         Open API 타입: <span th:text="${searchHistoryInfo.openApiType.description}"></span><br>
-                        카테고리: <span th:text="${searchHistoryInfo.category != null ? searchHistoryInfo.category.description : ''}"></span><br>
-                        항목: <span th:text="${searchHistoryInfo.target != null ? searchHistoryInfo.target.description : ''}"></span><br>
+                        카테고리: <span th:text="${searchHistoryInfo.category != null ? searchHistoryInfo.category.description : '전체'}"></span><br>
+                        항목: <span th:text="${searchHistoryInfo.target != null ? searchHistoryInfo.target.description : '전체'}"></span><br>
                         검색날짜: <span th:text="${searchHistoryInfo.regDate}"></span><br>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                 <li class="page-item" th:each="i: ${#numbers.sequence(paging.firstPage, paging.endPage)}">
                     <a class="page-link" th:href="${paging.page != i ? 'javascript:goPage('+ i +');' : '#'}" th:text="${i}"></a>
                 </li>
-                <li class="page-item" th:if="${paging.nextPageNo <= paging.totalCount}">
+                <li class="page-item" th:if="${paging.nextPageNo <= paging.totalPage}">
                     <a class="page-link" th:href="${'javascript:goPage('+ paging.nextPageNo +');'}" aria-label="Next">
                         <span aria-hidden="true">next</span>
                     </a>
