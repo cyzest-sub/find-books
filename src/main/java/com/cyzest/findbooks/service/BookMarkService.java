@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -33,7 +32,6 @@ public class BookMarkService {
 
     private BookSearchService bookSearchService;
 
-    @Transactional
     public void saveBookMark(String userId, OpenApiType openApiType, String isbn) throws Exception {
 
         if (StringUtils.isEmpty(isbn)) {
@@ -69,7 +67,6 @@ public class BookMarkService {
         }
     }
 
-    @Transactional
     public void deleteBookMark(String userId, long id) {
 
         User user = userRepository.findById(userId);
@@ -84,7 +81,6 @@ public class BookMarkService {
         }
     }
 
-    @Transactional(readOnly = true)
     public BookMarkResult getBookMarksByUserId(String userId, BookMarkPagingParam pagingParam) {
 
         BookMarkResult bookMarkResult = new BookMarkResult();

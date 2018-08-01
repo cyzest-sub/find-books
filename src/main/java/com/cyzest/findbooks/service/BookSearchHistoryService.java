@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -31,7 +30,6 @@ public class BookSearchHistoryService {
 
     private OpenApiBookSearchHelper openApiBookSearchHelper;
 
-    @Transactional
     public void saveHistory(String userId, OpenApiBookSearchParam openApiBookSearchParam) {
 
         User user = userRepository.findById(userId);
@@ -52,7 +50,6 @@ public class BookSearchHistoryService {
         }
     }
 
-    @Transactional(readOnly = true)
     public BookSearchHistoryResult getHistoriesByUserId(String userId, Pageable pageable) {
 
         BookSearchHistoryResult bookSearchHistoryResult = new BookSearchHistoryResult();
