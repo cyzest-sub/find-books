@@ -41,6 +41,10 @@ public class OpenApiBookSearchHelper {
         return getOpenApiBookSearcher(openApiType).getBookSearchTarget(targetCode);
     }
 
+    public int getBookSearchMaxPageByOpenApiType(OpenApiType openApiType, int pageSize) {
+        return getOpenApiBookSearcher(openApiType).getAvailableMaxPageByPageSize(pageSize);
+    }
+
     public OpenApiBookSearcher getOpenApiBookSearcher(OpenApiType openApiType) {
 
         if (openApiType == null) {

@@ -20,4 +20,6 @@ public interface OpenApiBookSearcher {
 
     boolean isAvailableBookSearchTargetCode(String bookSearchTargetCode);
 
+    int getAvailableMaxPageByPageSize(int pageSize);
+
 }

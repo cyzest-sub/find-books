@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,8 @@ public class KakaoOpenApiBookSearcher implements OpenApiBookSearcher {
     private final String API_AUTH_HEADER_KEY_PREFIX = "KakaoAK";
 
     private final String SEARCH_BOOKS_URI = "/v2/search/book";
+
+    private final int MAX_PAGE = 50;
 
     public KakaoOpenApiBookSearcher(RestTemplate restTemplate, String restApiKey) {
 
@@ -99,13 +102,25 @@ public class KakaoOpenApiBookSearcher implements OpenApiBookSearcher {
                 urlBuilder.queryParam("target", targetCode);
             }
 
-            Optional.ofNullable(bookSearchParam.getSort()).ifPresent(sort -> urlBuilder.queryParam("sort", sort.getCode()));
-            Optional.ofNullable(bookSearchParam.getPage()).ifPresent(page -> urlBuilder.queryParam("page", page));
-            Optional.ofNullable(bookSearchParam.getSize()).ifPresent(size -> urlBuilder.queryParam("size", size));
+            Optional.ofNullable(bookSearchParam.getSort())
+                    .ifPresent(sort -> urlBuilder.queryParam("sort", sort.getCode()));
+
+            Integer page = Optional.ofNullable(bookSearchParam.getPage()).orElse(1);
+            Integer size = Optional.ofNullable(bookSearchParam.getSize()).orElse(10);
+
+            if (page > getAvailableMaxPageByPageSize(size)) {
+                throw new IllegalArgumentException("page not available");
+            }
+
+            urlBuilder.queryParam("page", page);
+            urlBuilder.queryParam("size", size);
+
+            URI requestUri = urlBuilder.build().encode().toUri();
+
+            log.debug("Request URI : {}", requestUri);
 
             ResponseEntity<KakaoBookSearchResult> responseEntity = restTemplate.exchange(
-                    urlBuilder.build().encode().toUri(), HttpMethod.GET,
-                    new HttpEntity<>(getKakaoHttpHeaders()), KakaoBookSearchResult.class);
+                    requestUri, HttpMethod.GET, new HttpEntity<>(getKakaoHttpHeaders()), KakaoBookSearchResult.class);
 
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
 
@@ -180,6 +195,11 @@ public class KakaoOpenApiBookSearcher implements OpenApiBookSearcher {
     @Override
     public boolean isAvailableBookSearchTargetCode(String bookSearchTargetCode) {
         return bookSearchTargetMap.containsKey(bookSearchTargetCode);
+    }
+
+    @Override
+    public int getAvailableMaxPageByPageSize(int pageSize) {
+        return MAX_PAGE;
     }
 
     private HttpHeaders getKakaoHttpHeaders() {

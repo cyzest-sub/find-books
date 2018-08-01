@@ -5,6 +5,8 @@ import com.cyzest.findbooks.searcher.BookSearchSort;
 import com.cyzest.findbooks.searcher.OpenApiType;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
+
 @Data
 public class OpenApiBookSearchParam {
 
@@ -13,7 +15,11 @@ public class OpenApiBookSearchParam {
     private String targetCode;
     private String query;
     private BookSearchSort sort = BookSearchSort.ACCURACY;
+
+    @Min(1)
     private Integer page = 1;
+
+    @Min(1)
     private Integer size = 9;
 
     public BookSearchParam createBookSearchParam() {

@@ -46,6 +46,8 @@ public class NaverOpenApiBookSearcher implements OpenApiBookSearcher {
     private final String SEARCH_BOOKS_URI = "/v1/search/book.xml";
     private final String SEARCH_BOOKS_ADVANCED_URI = "/v1/search/book_adv.xml";
 
+    private final int MAX_START = 1000;
+
     public NaverOpenApiBookSearcher(RestTemplate restTemplate, String clientId, String clientSecret) {
 
         if (restTemplate == null) {
@@ -134,6 +136,10 @@ public class NaverOpenApiBookSearcher implements OpenApiBookSearcher {
             Integer page = Optional.ofNullable(bookSearchParam.getPage()).orElse(1);
             Integer size = Optional.ofNullable(bookSearchParam.getSize()).orElse(10);
 
+            if (page > getAvailableMaxPageByPageSize(size)) {
+                throw new IllegalArgumentException("page not available");
+            }
+
             urlBuilder.queryParam("start", size * (page - 1) + 1);
             urlBuilder.queryParam("display", size);
 
@@ -218,6 +224,11 @@ public class NaverOpenApiBookSearcher implements OpenApiBookSearcher {
     @Override
     public boolean isAvailableBookSearchTargetCode(String bookSearchTargetCode) {
         return bookSearchTargetMap.containsKey(bookSearchTargetCode);
+    }
+
+    @Override
+    public int getAvailableMaxPageByPageSize(int pageSize) {
+        return ((MAX_START - 1) / pageSize) + 1;
     }
 
     private HttpHeaders getNaverHttpHeaders() {

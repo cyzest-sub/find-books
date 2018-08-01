@@ -62,6 +62,7 @@ public class BookSearchController {
             bookSearchHistoryService.saveHistory(authentication.getName(), bookSearchParam);
 
             model.addAttribute("paging", new Paging(bookSearchParam.getPage(), bookSearchParam.getSize(), bookSearchResult.getTotalCount()));
+            model.addAttribute("maxPage", openApiBookSearchHelper.getBookSearchMaxPageByOpenApiType(openApiType, bookSearchParam.getSize()));
         }
 
         model.addAttribute("bookSearchResult", bookSearchResult);
