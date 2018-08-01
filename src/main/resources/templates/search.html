@@ -94,7 +94,7 @@
                     <div class="col-sm-4 product">
                         <div class="product-inner text-center">
                             <a th:href="${''.equals(bookInfo.isbn) ? '#' : '/books/' + bookSearchParam.openApiType.code + '/' + bookInfo.isbn }">
-                                <img th:src="${bookInfo.thumbnail}" />
+                                <img th:src="${bookInfo.thumbnail}" height="100" />
                             </a><br>
                             <a th:href="${''.equals(bookInfo.isbn) ? '#' : '/books/' + bookSearchParam.openApiType.code + '/' + bookInfo.isbn }">
                             제목: <span th:text="${bookInfo.title}"></span>
