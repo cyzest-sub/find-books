@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.Optional;
 
 @Data
 public class NaverBookInfo {
@@ -25,7 +26,7 @@ public class NaverBookInfo {
 
         BookInfo bookInfo = new BookInfo();
 
-        bookInfo.setTitle(title);
+        bookInfo.setTitle(Optional.ofNullable(title).map(s -> s.replaceAll("<b>|</b>", "")).orElse(title));
         bookInfo.setUrl(link);
         bookInfo.setIsbn(isbn);
         bookInfo.setDatetime(pubdate);
