@@ -1,5 +1,6 @@
 package com.cyzest.findbooks.searcher;
 
+import com.cyzest.findbooks.ExceptedAssert;
 import com.cyzest.findbooks.FindBooksProperties;
 import com.cyzest.findbooks.searcher.kakao.KakaoOpenApiBookSearcher;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +41,10 @@ public class KakaoOpenApiBookSearcherTest {
         Assert.assertNull(bookSearchResult.getBookInfos());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void 빈_검색파라미터의_경우_결과를_만족하는가() {
-        kakaoOpenApiBookSearcher.search(new BookSearchParam());
+        ExceptedAssert.assertThrows(IllegalArgumentException.class,
+                () -> kakaoOpenApiBookSearcher.search(new BookSearchParam()));
     }
 
     @Test
@@ -74,6 +76,17 @@ public class KakaoOpenApiBookSearcherTest {
         Assert.assertNotNull(bookInfo);
         Assert.assertEquals(bookInfo.getIsbn(), "9788950974329");
         log.info("BookInfo : {}", bookInfo.getIsbn());
+    }
+
+    @Test
+    public void 검색_최대_페이지_보다_큰_페이지_요청시_결과를_만족하는가() {
+        int maxPage = kakaoOpenApiBookSearcher.getAvailableMaxPageByPageSize(9);
+        Assert.assertTrue(0 < maxPage);
+        BookSearchParam bookSearchParam = new BookSearchParam();
+        bookSearchParam.setQuery("카카오");
+        bookSearchParam.setPage(maxPage + 1);
+        ExceptedAssert.assertThrows(IllegalArgumentException.class,
+                () -> kakaoOpenApiBookSearcher.search(bookSearchParam));
     }
 
 }

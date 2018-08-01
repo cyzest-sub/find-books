@@ -1,5 +1,6 @@
 package com.cyzest.findbooks.service;
 
+import com.cyzest.findbooks.ExceptedAssert;
 import com.cyzest.findbooks.searcher.BookSearchParam;
 import com.cyzest.findbooks.searcher.BookSearchResult;
 import com.cyzest.findbooks.searcher.OpenApiType;
@@ -19,9 +20,10 @@ public class BookSearchServiceTest {
     @Autowired
     private BookSearchService bookSearchService;
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void 오픈API타입_파라미터가_없을경우_정상작동하는가() {
-        bookSearchService.searchBooks(null, null);
+        ExceptedAssert.assertThrows(IllegalArgumentException.class,
+                () -> bookSearchService.searchBooks(null, null));
     }
 
     @Test
@@ -41,23 +43,11 @@ public class BookSearchServiceTest {
     @Test
     public void 빈_검색_파라미터일경우_결과를_만족하는가() {
 
-        try {
-            bookSearchService.searchBooks(OpenApiType.KAKAO, new BookSearchParam());
-            Assert.fail();
-        } catch (Throwable ex) {
-            if (!(ex instanceof IllegalArgumentException)) {
-                Assert.fail();
-            }
-        }
+        ExceptedAssert.assertThrows(IllegalArgumentException.class,
+                () -> bookSearchService.searchBooks(OpenApiType.KAKAO, new BookSearchParam()));
 
-        try {
-            bookSearchService.searchBooks(OpenApiType.NAVER, new BookSearchParam());
-            Assert.fail();
-        } catch (Throwable ex) {
-            if (!(ex instanceof IllegalArgumentException)) {
-                Assert.fail();
-            }
-        }
+        ExceptedAssert.assertThrows(IllegalArgumentException.class,
+                () -> bookSearchService.searchBooks(OpenApiType.NAVER, new BookSearchParam()));
     }
 
     @Test
@@ -67,23 +57,11 @@ public class BookSearchServiceTest {
 
         bookSearchParam.setTargetCode("test");
 
-        try {
-            bookSearchService.searchBooks(OpenApiType.KAKAO, bookSearchParam);
-            Assert.fail();
-        } catch (Throwable ex) {
-            if (!(ex instanceof IllegalArgumentException)) {
-                Assert.fail();
-            }
-        }
+        ExceptedAssert.assertThrows(IllegalArgumentException.class,
+                () -> bookSearchService.searchBooks(OpenApiType.KAKAO, bookSearchParam));
 
-        try {
-            bookSearchService.searchBooks(OpenApiType.NAVER, bookSearchParam);
-            Assert.fail();
-        } catch (Throwable ex) {
-            if (!(ex instanceof IllegalArgumentException)) {
-                Assert.fail();
-            }
-        }
+        ExceptedAssert.assertThrows(IllegalArgumentException.class,
+                () -> bookSearchService.searchBooks(OpenApiType.NAVER, bookSearchParam));
     }
 
 }

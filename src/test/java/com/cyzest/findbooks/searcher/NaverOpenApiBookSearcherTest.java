@@ -1,5 +1,6 @@
 package com.cyzest.findbooks.searcher;
 
+import com.cyzest.findbooks.ExceptedAssert;
 import com.cyzest.findbooks.FindBooksProperties;
 import com.cyzest.findbooks.searcher.naver.NaverOpenApiBookSearcher;
 import lombok.extern.slf4j.Slf4j;
@@ -43,9 +44,10 @@ public class NaverOpenApiBookSearcherTest {
         Assert.assertNull(bookSearchResult.getBookInfos());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void 빈_검색파라미터의_경우_결과를_만족하는가() {
-        naverOpenApiBookSearcher.search(new BookSearchParam());
+        ExceptedAssert.assertThrows(IllegalArgumentException.class,
+                () -> naverOpenApiBookSearcher.search(new BookSearchParam()));
     }
 
     @Test
@@ -77,6 +79,17 @@ public class NaverOpenApiBookSearcherTest {
         Assert.assertNotNull(bookInfo);
         Assert.assertEquals(bookInfo.getIsbn(), "9791163030034");
         log.info("BookInfo : {}", bookInfo.getIsbn());
+    }
+
+    @Test
+    public void 검색_최대_페이지_보다_큰_페이지_요청시_결과를_만족하는가() {
+        int maxPage = naverOpenApiBookSearcher.getAvailableMaxPageByPageSize(9);
+        Assert.assertTrue(0 < maxPage);
+        BookSearchParam bookSearchParam = new BookSearchParam();
+        bookSearchParam.setQuery("자바");
+        bookSearchParam.setPage(maxPage + 1);
+        ExceptedAssert.assertThrows(IllegalArgumentException.class,
+                () -> naverOpenApiBookSearcher.search(bookSearchParam));
     }
 
 }
