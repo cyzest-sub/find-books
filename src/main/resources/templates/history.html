@@ -55,7 +55,7 @@
         <nav aria-label="Page navigation" style="text-align: center">
             <ul th:if="${paging != null}" class="pagination justify-content-center">
                 <li class="page-item" th:if="${paging.page > paging.pageRange}">
-                    <a class="page-link" th:href="${'javascrpit:goPage('+ paging.prevPageNo +');'}" aria-label="Previous">
+                    <a class="page-link" th:href="${'javascript:goPage('+ paging.prevPageNo +');'}" aria-label="Previous">
                         <span aria-hidden="true">prev</span>
                     </a>
                 </li>
