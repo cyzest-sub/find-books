@@ -1,12 +1,12 @@
 package com.cyzest.findbooks.controller;
 
-import com.cyzest.findbooks.common.EnumCodePropertyEditor;
 import com.cyzest.findbooks.common.Paging;
 import com.cyzest.findbooks.model.BookMarkPagingParam;
 import com.cyzest.findbooks.model.BookMarkResult;
 import com.cyzest.findbooks.model.BookMarkSort;
 import com.cyzest.findbooks.searcher.OpenApiType;
 import com.cyzest.findbooks.service.BookMarkService;
+import io.github.cyzest.commons.spring.web.EnumCodePropertyEditor;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -35,7 +35,8 @@ public class BookMarkController {
 
     @PostMapping("/bookmark")
     @ResponseBody public String saveBookMark(
-            @RequestParam OpenApiType openApiType, @RequestParam String isbn, Authentication authentication) throws Exception {
+            Authentication authentication,
+            @RequestParam OpenApiType openApiType, @RequestParam String isbn) throws Exception {
 
         bookMarkService.saveBookMark(authentication.getName(), openApiType, isbn);
 
@@ -51,13 +52,20 @@ public class BookMarkController {
     }
 
     @GetMapping("/bookmark")
-    public String getBookMarks(@ModelAttribute BookMarkPagingParam pagingParam, Authentication authentication, Model model) {
+    public String getBookMarks(
+            @ModelAttribute BookMarkPagingParam pagingParam, Authentication authentication, Model model) {
 
         model.addAttribute("bookMarkSorts", BookMarkSort.getBookMarkSorts());
 
         BookMarkResult bookMarkResult = bookMarkService.getBookMarksByUserId(authentication.getName(), pagingParam);
 
-        model.addAttribute("paging", new Paging(pagingParam.getPage(), pagingParam.getSize(), bookMarkResult.getTotalCount()));
+        Paging paging = Paging.builder()
+                .page(pagingParam.getPage())
+                .size(pagingParam.getSize())
+                .totalCount(bookMarkResult.getTotalCount())
+                .build();
+
+        model.addAttribute("paging", paging);
         model.addAttribute("bookMarkInfos", bookMarkResult.getBookMarkInfos());
         model.addAttribute("pagingParam", pagingParam);
 

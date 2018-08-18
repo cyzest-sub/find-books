@@ -1,6 +1,6 @@
 package com.cyzest.findbooks.searcher;
 
-import com.cyzest.findbooks.common.EnumCode;
+import io.github.cyzest.commons.spring.model.EnumCode;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,7 @@ public enum OpenApiType implements EnumCode {
     private String code;
     private String description;
 
-    private OpenApiType(String code, String description) {
+    OpenApiType(String code, String description) {
         this.code = code;
         this.description = description;
     }

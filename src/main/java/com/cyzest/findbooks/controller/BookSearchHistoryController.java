@@ -25,9 +25,16 @@ public class BookSearchHistoryController {
             Authentication authentication, Model model,
             @PageableDefault(size = 9, page = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        BookSearchHistoryResult bookSearchHistoryResult = bookSearchHistoryService.getHistoriesByUserId(authentication.getName(), pageable);
+        BookSearchHistoryResult bookSearchHistoryResult =
+                bookSearchHistoryService.getHistoriesByUserId(authentication.getName(), pageable);
 
-        model.addAttribute("paging", new Paging(pageable.getPageNumber(), pageable.getPageSize(), bookSearchHistoryResult.getTotalCount()));
+        Paging paging = Paging.builder()
+                .page(pageable.getPageNumber())
+                .size(pageable.getPageSize())
+                .totalCount(bookSearchHistoryResult.getTotalCount())
+                .build();
+
+        model.addAttribute("paging", paging);
         model.addAttribute("searchHistoryInfos", bookSearchHistoryResult.getSearchHistoryInfos());
 
         return "history";

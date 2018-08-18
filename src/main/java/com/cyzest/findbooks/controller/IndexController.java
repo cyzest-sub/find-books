@@ -14,10 +14,12 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     @RequestMapping("/")
-    public String index(HttpSession session, Model model,
+    public String index(
+            HttpSession session, Model model,
             @RequestParam(value = "login_error", required = false) String loginError) {
 
-        Object securityContextObject = session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+        Object securityContextObject =
+                session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
 
         if (securityContextObject != null) {
             return "redirect:/search";

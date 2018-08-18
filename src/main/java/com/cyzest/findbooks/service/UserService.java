@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -25,7 +24,7 @@ public class UserService implements UserDetailsService {
 
     public void registerUser(String id, String password) throws Exception {
 
-        if (userRepository.exists(id)) {
+        if (userRepository.existsById(id)) {
             throw new IllegalAccessException();
         }
 
@@ -40,8 +39,9 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        return Optional.ofNullable(userRepository.findById(id))
-                .map(DefaultAuthUser::new).orElseThrow(() -> new UsernameNotFoundException(id + " not found"));
+        return userRepository.findById(id)
+                .map(DefaultAuthUser::new)
+                .orElseThrow(() -> new UsernameNotFoundException(id + " not found"));
     }
 
 }

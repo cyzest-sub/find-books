@@ -63,8 +63,11 @@ public class KakaoOpenApiBookSearcher implements OpenApiBookSearcher {
         bookSearchCategories = getDefaultBookSearchCategories();
         bookSearchTargets = getDefaultBookSearchTargets();
 
-        bookSearchCategoryMap = bookSearchCategories.stream().collect(Collectors.toMap(BookSearchCategory::getCode, category -> category));
-        bookSearchTargetMap = bookSearchTargets.stream().collect(Collectors.toMap(BookSearchTarget::getCode, target -> target));
+        bookSearchCategoryMap = bookSearchCategories.stream()
+                .collect(Collectors.toMap(BookSearchCategory::getCode, category -> category));
+
+        bookSearchTargetMap = bookSearchTargets.stream()
+                .collect(Collectors.toMap(BookSearchTarget::getCode, target -> target));
     }
 
     @Override

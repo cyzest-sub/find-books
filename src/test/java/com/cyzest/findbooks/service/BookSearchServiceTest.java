@@ -4,7 +4,7 @@ import com.cyzest.findbooks.ExceptedAssert;
 import com.cyzest.findbooks.searcher.BookSearchParam;
 import com.cyzest.findbooks.searcher.BookSearchResult;
 import com.cyzest.findbooks.searcher.OpenApiType;
-import groovy.util.logging.Slf4j;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

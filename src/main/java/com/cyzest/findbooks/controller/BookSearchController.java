@@ -1,14 +1,11 @@
 package com.cyzest.findbooks.controller;
 
-import com.cyzest.findbooks.common.EnumCodePropertyEditor;
 import com.cyzest.findbooks.common.Paging;
 import com.cyzest.findbooks.model.OpenApiBookSearchParam;
-import com.cyzest.findbooks.searcher.BookSearchResult;
-import com.cyzest.findbooks.searcher.BookSearchSort;
-import com.cyzest.findbooks.searcher.OpenApiBookSearchHelper;
+import com.cyzest.findbooks.searcher.*;
 import com.cyzest.findbooks.service.BookSearchHistoryService;
 import com.cyzest.findbooks.service.BookSearchService;
-import com.cyzest.findbooks.searcher.OpenApiType;
+import io.github.cyzest.commons.spring.web.EnumCodePropertyEditor;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -22,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.beans.PropertyEditor;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -44,13 +42,20 @@ public class BookSearchController {
     }
 
     @GetMapping("/search")
-    public String search(@ModelAttribute OpenApiBookSearchParam bookSearchParam, Authentication authentication, Model model) throws Exception {
+    public String search(
+            @ModelAttribute OpenApiBookSearchParam bookSearchParam, Authentication authentication, Model model) {
 
         OpenApiType openApiType = bookSearchParam.getOpenApiType();
 
+        List<BookSearchCategory> bookSearchCategories =
+                openApiBookSearchHelper.getBookSeachCategoriesByOpenApiType(openApiType);
+
+        List<BookSearchTarget> bookSearchTargets =
+                openApiBookSearchHelper.getBookSearchTargetsByOpenApiType(openApiType);
+
         model.addAttribute("openApiTypes", OpenApiType.getOpenApiTypes());
-        model.addAttribute("bookSearchCategories", openApiBookSearchHelper.getBookSeachCategoriesByOpenApiType(openApiType));
-        model.addAttribute("bookSearchTargets", openApiBookSearchHelper.getBookSearchTargetsByOpenApiType(openApiType));
+        model.addAttribute("bookSearchCategories", bookSearchCategories);
+        model.addAttribute("bookSearchTargets", bookSearchTargets);
         model.addAttribute("bookSearchSorts", BookSearchSort.getBookSearchSorts());
 
         BookSearchResult bookSearchResult = null;
@@ -61,8 +66,17 @@ public class BookSearchController {
 
             bookSearchHistoryService.saveHistory(authentication.getName(), bookSearchParam);
 
-            model.addAttribute("paging", new Paging(bookSearchParam.getPage(), bookSearchParam.getSize(), bookSearchResult.getTotalCount()));
-            model.addAttribute("maxPage", openApiBookSearchHelper.getBookSearchMaxPageByOpenApiType(openApiType, bookSearchParam.getSize()));
+            Paging paging = Paging.builder()
+                    .page(bookSearchParam.getPage())
+                    .size(bookSearchParam.getSize())
+                    .totalCount(bookSearchResult.getTotalCount())
+                    .build();
+
+            int maxPage =
+                    openApiBookSearchHelper.getBookSearchMaxPageByOpenApiType(openApiType, bookSearchParam.getSize());
+
+            model.addAttribute("paging", paging);
+            model.addAttribute("maxPage", maxPage);
         }
 
         model.addAttribute("bookSearchResult", bookSearchResult);
@@ -72,7 +86,7 @@ public class BookSearchController {
     }
 
     @GetMapping("/books/{openApiType}/{isbn}")
-    public String getBook(@PathVariable OpenApiType openApiType, @PathVariable String isbn, Authentication authentication, Model model) {
+    public String getBook(@PathVariable OpenApiType openApiType, @PathVariable String isbn, Model model) {
 
         model.addAttribute("openApiType", openApiType);
         model.addAttribute("bookInfo", bookSearchService.getBookByIsbn(openApiType, isbn));

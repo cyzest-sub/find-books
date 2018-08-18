@@ -2,7 +2,6 @@ package com.cyzest.findbooks.service;
 
 import com.cyzest.findbooks.dao.BookSearchHistory;
 import com.cyzest.findbooks.dao.BookSearchHistoryRepository;
-import com.cyzest.findbooks.dao.User;
 import com.cyzest.findbooks.dao.UserRepository;
 import com.cyzest.findbooks.model.BookSearchHistoryInfo;
 import com.cyzest.findbooks.model.BookSearchHistoryResult;
@@ -32,9 +31,7 @@ public class BookSearchHistoryService {
 
     public void saveHistory(String userId, OpenApiBookSearchParam openApiBookSearchParam) {
 
-        User user = userRepository.findById(userId);
-
-        if (user != null) {
+        userRepository.findById(userId).ifPresent(user -> {
 
             BookSearchHistory bookSearchHistory = new BookSearchHistory();
 
@@ -47,25 +44,24 @@ public class BookSearchHistoryService {
             bookSearchHistory.setUser(user);
 
             bookSearchHistoryRepository.saveAndFlush(bookSearchHistory);
-        }
+
+        });
     }
 
     public BookSearchHistoryResult getHistoriesByUserId(String userId, Pageable pageable) {
 
         BookSearchHistoryResult bookSearchHistoryResult = new BookSearchHistoryResult();
 
-        User user = userRepository.findById(userId);
+        userRepository.findById(userId).ifPresent(user -> {
 
-        if (user != null) {
-
-            PageRequest pageRequest = new PageRequest(
+            PageRequest pageRequest = PageRequest.of(
                     pageable.getPageNumber() - 1, pageable.getPageSize(), pageable.getSort());
 
             Page<BookSearchHistory> bookSearchHistoriesPage = bookSearchHistoryRepository.findByUser(user, pageRequest);
 
             List<BookSearchHistory> bookSearchHistories = bookSearchHistoriesPage.getContent();
 
-            bookSearchHistoryResult.setTotalCount((int)bookSearchHistoriesPage.getTotalElements());
+            bookSearchHistoryResult.setTotalCount((int) bookSearchHistoriesPage.getTotalElements());
 
             if (bookSearchHistories != null) {
                 bookSearchHistoryResult.setSearchHistoryInfos(
@@ -86,7 +82,8 @@ public class BookSearchHistoryService {
                         }).collect(Collectors.toList())
                 );
             }
-        }
+
+        });
 
         return bookSearchHistoryResult;
     }

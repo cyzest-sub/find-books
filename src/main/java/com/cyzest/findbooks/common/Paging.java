@@ -1,20 +1,17 @@
 package com.cyzest.findbooks.common;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class Paging {
 
     private final int pageRange = 10;
 
     private int page;
     private int size;
-    private int totalCount = 0;
-
-    public Paging(int page, int size) {
-        this.page = page;
-        this.size = size;
-    }
+    private int totalCount;
 
     public Paging(int page, int size, int totalCount) {
         this.page = page;

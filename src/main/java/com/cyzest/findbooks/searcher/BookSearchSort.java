@@ -1,6 +1,6 @@
 package com.cyzest.findbooks.searcher;
 
-import com.cyzest.findbooks.common.EnumCode;
+import io.github.cyzest.commons.spring.model.EnumCode;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ public enum BookSearchSort implements EnumCode {
     private String code;
     private String description;
 
-    private BookSearchSort(String code, String description) {
+    BookSearchSort(String code, String description) {
         this.code = code;
         this.description = description;
     }

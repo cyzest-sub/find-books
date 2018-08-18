@@ -1,6 +1,6 @@
 package com.cyzest.findbooks.model;
 
-import com.cyzest.findbooks.common.EnumCode;
+import io.github.cyzest.commons.spring.model.EnumCode;
 import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;

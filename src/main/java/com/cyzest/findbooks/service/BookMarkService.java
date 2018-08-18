@@ -38,7 +38,8 @@ public class BookMarkService {
             throw new IllegalArgumentException();
         }
 
-        User user = userRepository.findById(userId);
+        //FIXME BasedException 적용 후 ifPresent 로 변경 할 것
+        User user = userRepository.findById(userId).orElse(null);
 
         if (user != null) {
 
@@ -69,39 +70,37 @@ public class BookMarkService {
 
     public void deleteBookMark(String userId, long id) {
 
-        User user = userRepository.findById(userId);
-
-        if (user != null) {
+        userRepository.findById(userId).ifPresent(user -> {
 
             List<BookMark> existBookMarks = bookMarkRepository.findByUserAndId(user, id);
 
             if (!CollectionUtils.isEmpty(existBookMarks)) {
                 bookMarkRepository.delete(existBookMarks.get(0));
             }
-        }
+
+        });
     }
 
     public BookMarkResult getBookMarksByUserId(String userId, BookMarkPagingParam pagingParam) {
 
         BookMarkResult bookMarkResult = new BookMarkResult();
 
-        User user = userRepository.findById(userId);
+        userRepository.findById(userId).ifPresent(user -> {
 
-        if (user != null) {
-
-            PageRequest pageRequest = new PageRequest(
+            PageRequest pageRequest = PageRequest.of(
                     pagingParam.getPage() - 1, pagingParam.getSize(), pagingParam.getSort().getSort());
 
             Page<BookMark> bookMarksPage = bookMarkRepository.findByUser(user, pageRequest);
 
             List<BookMark> bookMarks = bookMarksPage.getContent();
 
-            bookMarkResult.setTotalCount((int)bookMarksPage.getTotalElements());
+            bookMarkResult.setTotalCount((int) bookMarksPage.getTotalElements());
 
             if (bookMarks != null) {
                 bookMarkResult.setBookMarkInfos(bookMarks.stream().map(BookMarkInfo::new).collect(Collectors.toList()));
             }
-        }
+
+        });
 
         return bookMarkResult;
     }
