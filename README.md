@@ -13,6 +13,7 @@
 1. Lombok - Boilerplate 코드 자동생성 용도
 1. ModelMapper - 오브젝트 변환 용도
 1. thymeleaf3 - 화면 뷰 템플릿 용도
+1. Spring Cloud Vault - 시크릿 설정 정보 분리 용도
 
 ### Front-end 추가 라이브러리
 1. Bootstrap3 - 화면 구성을 위해 이용
@@ -31,7 +32,8 @@ $ mvn clean compile
 $ mvn spring-boot:run
 ```
 * http://localhost:8080 으로 접속하여 확인
-* 포트는 8080 을 사용합니다. (application.properties 에서 수정 가능)
+* 포트는 8080 을 사용합니다. (application.properties 에서 수정가능)
+* Vault 정보를 자신의 환경에 맞게 변경해야 합니다. (bootstrap.properties 에서 수정가능)
 
 ### 테스트 (Junit)
 
