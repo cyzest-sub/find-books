@@ -1,7 +1,7 @@
 # find-books
 
 [![Build Status](https://travis-ci.org/cyzest/find-books.svg?branch=master)](https://travis-ci.org/cyzest/find-books)
-[![codecov](https://codecov.io/gh/cyzest/find-books/branch/master/graph/badge.svg)](https://codecov.io/gh/cyzest/findbooks)
+[![codecov](https://codecov.io/gh/cyzest/find-books/branch/master/graph/badge.svg)](https://codecov.io/gh/cyzest/find-books)
 
 ### OpenAPI를 활용한 책 검색 서비스
 
