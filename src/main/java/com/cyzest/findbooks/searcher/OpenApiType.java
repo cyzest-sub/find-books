@@ -1,10 +1,12 @@
 package com.cyzest.findbooks.searcher;
 
+import io.github.cyzest.commons.spring.dao.apt.JpaEnumCodeConverter;
 import io.github.cyzest.commons.spring.model.EnumCode;
 
 import java.util.Arrays;
 import java.util.List;
 
+@JpaEnumCodeConverter
 public enum OpenApiType implements EnumCode {
 
     KAKAO("kakao", "카카오"),
