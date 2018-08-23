@@ -4,7 +4,7 @@
 
 1. Java 8 버전을 사용
 1. Spring Boot 2.0 사용 (Spring Framework 5.0 기반)
-1. Spring Data JPA 사용
+1. Spring Data JPA 사용 (Hibernate 5.2 구현체 사용)
 1. Spring Boot 에서 제공하는 임베디드 Undertow 사용
 1. H2 DB 사용
 
@@ -39,13 +39,19 @@ $ mvn spring-boot:run
 
 ```
 $ mvn clean compile test
+
+// Vault 정보 System Property 주입 시
+$ mvn clean compile test -DVAULT_HOST={HOST} -DVAULT_TOKEN={TOKEN}
 ```
 
 ### 배포 및 실행 (Jar)
 
 ```
-$ mvn clean compile
 $ mvn package
 $ cd target
 $ java -jar find-books-1.0.0.jar
+
+// Vault 정보 System Property 주입 시
+$ mvn package -DVAULT_HOST={HOST} -DVAULT_TOKEN={TOKEN}
+$ java -DVAULT_HOST={HOST} -DVAULT_TOKEN={TOKEN} -jar find-books-1.0.0.jar
 ```
