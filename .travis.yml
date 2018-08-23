@@ -1,5 +1,7 @@
 language: java
 
+sudo: false
+
 jdk:
   - openjdk8
 
@@ -11,7 +13,9 @@ cache:
   directories:
     - '$HOME/.m2/repository'
 
-script: "mvn cobertura:cobertura -DVAULT_HOST=$VAULT_HOST -DVAULT_TOKEN=$VAULT_TOKEN"
+script:
+  - "mvn clean compile"
+  - "mvn cobertura:cobertura -DVAULT_HOST=$VAULT_HOST -DVAULT_TOKEN=$VAULT_TOKEN"
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
