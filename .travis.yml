@@ -14,8 +14,7 @@ cache:
     - '$HOME/.m2/repository'
 
 script:
-  - "mvn clean compile"
-  - "mvn cobertura:cobertura -DVAULT_HOST=$VAULT_HOST -DVAULT_TOKEN=$VAULT_TOKEN"
+  - "mvn clean compile test -DVAULT_HOST=$VAULT_HOST -DVAULT_TOKEN=$VAULT_TOKEN"
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
