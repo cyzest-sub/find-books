@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -19,6 +19,6 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    private Date regDate;
+    private LocalDateTime regDate;
 
 }

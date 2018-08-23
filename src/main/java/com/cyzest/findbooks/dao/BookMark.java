@@ -4,7 +4,7 @@ import com.cyzest.findbooks.searcher.OpenApiType;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -26,7 +26,7 @@ public class BookMark {
     private String thumbnail;
 
     @Column(nullable = false)
-    private Date regDate;
+    private LocalDateTime regDate;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "USER_ID")

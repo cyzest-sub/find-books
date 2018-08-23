@@ -14,7 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +40,7 @@ public class BookSearchHistoryService {
             bookSearchHistory.setTargetCode(openApiBookSearchParam.getTargetCode());
             bookSearchHistory.setSort(openApiBookSearchParam.getSort());
             bookSearchHistory.setQuery(openApiBookSearchParam.getQuery());
-            bookSearchHistory.setRegDate(new Date());
+            bookSearchHistory.setRegDate(LocalDateTime.now());
             bookSearchHistory.setUser(user);
 
             bookSearchHistoryRepository.saveAndFlush(bookSearchHistory);

@@ -6,7 +6,7 @@ import com.cyzest.findbooks.searcher.BookSearchTarget;
 import com.cyzest.findbooks.searcher.OpenApiType;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class BookSearchHistoryInfo {
@@ -17,6 +17,6 @@ public class BookSearchHistoryInfo {
     private BookSearchCategory category;
     private BookSearchTarget target;
     private BookSearchSort sort;
-    private Date regDate;
+    private LocalDateTime regDate;
 
 }

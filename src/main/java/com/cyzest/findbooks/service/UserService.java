@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Service
@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
 
         user.setId(id);
         user.setPassword(passwordEncoder.encode(password));
-        user.setRegDate(new Date());
+        user.setRegDate(LocalDateTime.now());
 
         userRepository.saveAndFlush(user);
     }

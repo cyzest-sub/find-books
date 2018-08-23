@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,7 +61,7 @@ public class BookMarkService {
             bookMark.setOpenApiType(openApiType);
             bookMark.setTitle(bookInfo.getTitle());
             bookMark.setThumbnail(bookInfo.getThumbnail());
-            bookMark.setRegDate(new Date());
+            bookMark.setRegDate(LocalDateTime.now());
             bookMark.setUser(user);
 
             bookMarkRepository.saveAndFlush(bookMark);

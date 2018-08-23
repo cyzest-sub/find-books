@@ -4,7 +4,7 @@ import com.cyzest.findbooks.dao.BookMark;
 import com.cyzest.findbooks.searcher.OpenApiType;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class BookMarkInfo {
@@ -14,7 +14,7 @@ public class BookMarkInfo {
     private String isbn;
     private String title;
     private String thumbnail;
-    private Date regDate;
+    private LocalDateTime regDate;
 
     public BookMarkInfo(BookMark bookMark) {
         if (bookMark != null) {
