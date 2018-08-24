@@ -44,17 +44,16 @@ $ mvn spring-boot:run
 $ mvn clean compile test
 
 // Vault 정보 System Property 주입 시
-$ mvn clean compile test -DVAULT_HOST={HOST} -DVAULT_TOKEN={TOKEN}
+$ mvn clean compile test -DVAULT_TOKEN={TOKEN}
 ```
 
 ### 배포 및 실행 (Jar)
 
 ```
 $ mvn package
-$ cd target
-$ java -jar find-books-1.0.0.jar
+$ java -jar ./target/find-books-1.0.0.jar
 
 // Vault 정보 System Property 주입 시
-$ mvn package -DVAULT_HOST={HOST} -DVAULT_TOKEN={TOKEN}
-$ java -DVAULT_HOST={HOST} -DVAULT_TOKEN={TOKEN} -jar find-books-1.0.0.jar
+$ mvn package -DVAULT_TOKEN={TOKEN}
+$ java -DVAULT_TOKEN={TOKEN} -jar ./target/find-books-1.0.0.jar
 ```
