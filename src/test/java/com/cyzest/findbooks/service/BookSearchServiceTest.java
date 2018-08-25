@@ -31,12 +31,12 @@ public class BookSearchServiceTest {
 
         BookSearchResult kakaoBookSearchResult = bookSearchService.searchBooks(OpenApiType.KAKAO, null);
         Assert.assertNotNull(kakaoBookSearchResult);
-        Assert.assertEquals(kakaoBookSearchResult.getTotalCount(), 0);
+        Assert.assertEquals(0, kakaoBookSearchResult.getTotalCount());
         Assert.assertNull(kakaoBookSearchResult.getBookInfos());
 
         BookSearchResult naverBookSearchResult = bookSearchService.searchBooks(OpenApiType.NAVER, null);
         Assert.assertNotNull(naverBookSearchResult);
-        Assert.assertEquals(naverBookSearchResult.getTotalCount(), 0);
+        Assert.assertEquals(0, naverBookSearchResult.getTotalCount());
         Assert.assertNull(naverBookSearchResult.getBookInfos());
     }
 

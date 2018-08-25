@@ -7,6 +7,8 @@ import com.cyzest.findbooks.model.BookSearchHistoryInfo;
 import com.cyzest.findbooks.model.BookSearchHistoryResult;
 import com.cyzest.findbooks.model.OpenApiBookSearchParam;
 import com.cyzest.findbooks.searcher.OpenApiBookSearchHelper;
+import com.cyzest.findbooks.searcher.OpenApiBookSearcher;
+import com.cyzest.findbooks.searcher.OpenApiType;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -30,6 +33,24 @@ public class BookSearchHistoryService {
     private OpenApiBookSearchHelper openApiBookSearchHelper;
 
     public void saveHistory(String userId, OpenApiBookSearchParam openApiBookSearchParam) {
+
+        OpenApiType openApiType = openApiBookSearchParam.getOpenApiType();
+
+        OpenApiBookSearcher openApiBookSearcher = openApiBookSearchHelper.getOpenApiBookSearcher(openApiType);
+
+        boolean checkCategoryCode = Optional.ofNullable(openApiBookSearchParam.getCategoryCode())
+                .map(openApiBookSearcher::isAvailableBookSearchCategoryCode).orElse(true);
+
+        if (!checkCategoryCode) {
+            throw new IllegalArgumentException("categoryCode not available");
+        }
+
+        boolean checkTargetCode = Optional.ofNullable(openApiBookSearchParam.getTargetCode())
+                .map(openApiBookSearcher::isAvailableBookSearchTargetCode).orElse(true);
+
+        if (!checkTargetCode) {
+            throw new IllegalArgumentException("targetCode not available");
+        }
 
         userRepository.findById(userId).ifPresent(user -> {
 

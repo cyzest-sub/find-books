@@ -1,11 +1,7 @@
 package com.cyzest.findbooks.searcher.naver;
 
-import com.cyzest.findbooks.common.BasedModelMapper;
 import com.cyzest.findbooks.searcher.*;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.Conditions;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.http.*;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -32,21 +28,19 @@ public class NaverOpenApiBookSearcher implements OpenApiBookSearcher {
 
     private final RestTemplate restTemplate;
 
-    private final ModelMapper modelMapper;
-
     private final String clientId;
 
     private final String clientSecret;
 
-    private final String API_PROTOCOL = "https";
-    private final String API_HOST = "openapi.naver.com";
-    private final String CLIENT_ID_HEADER_NAME = "X-Naver-Client-Id";
-    private final String CLIENT_SECRET_HEADER_NAME = "X-Naver-Client-Secret";
+    private static final String API_PROTOCOL = "https";
+    private static final String API_HOST = "openapi.naver.com";
+    private static final String CLIENT_ID_HEADER_NAME = "X-Naver-Client-Id";
+    private static final String CLIENT_SECRET_HEADER_NAME = "X-Naver-Client-Secret";
 
-    private final String SEARCH_BOOKS_URI = "/v1/search/book.xml";
-    private final String SEARCH_BOOKS_ADVANCED_URI = "/v1/search/book_adv.xml";
+    private static final String SEARCH_BOOKS_URI = "/v1/search/book.xml";
+    private static final String SEARCH_BOOKS_ADVANCED_URI = "/v1/search/book_adv.xml";
 
-    private final int MAX_START = 1000;
+    private static final int MAX_START = 1000;
 
     public NaverOpenApiBookSearcher(RestTemplate restTemplate, String clientId, String clientSecret) {
 
@@ -65,11 +59,6 @@ public class NaverOpenApiBookSearcher implements OpenApiBookSearcher {
         this.restTemplate = restTemplate;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
-
-        modelMapper = new BasedModelMapper();
-        modelMapper.getConfiguration().setAmbiguityIgnored(true);
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 
         bookSearchCategories = getDefaultBookSearchCategories();
         bookSearchTargets = getDefaultBookSearchTargets();

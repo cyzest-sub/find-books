@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class BookInfo {
 
-    public static Type TYPE = new TypeToken<List<BookInfo>>() {}.getType();
+    public static final Type TYPE = new TypeToken<List<BookInfo>>() {}.getType();
 
     private String title;
     private String contents;

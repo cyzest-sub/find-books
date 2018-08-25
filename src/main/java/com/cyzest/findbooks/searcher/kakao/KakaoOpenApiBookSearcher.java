@@ -33,14 +33,14 @@ public class KakaoOpenApiBookSearcher implements OpenApiBookSearcher {
 
     private final String restApiKey;
 
-    private final String API_PROTOCOL = "https";
-    private final String API_HOST = "dapi.kakao.com";
-    private final String API_AUTH_HEADER_NAME = HttpHeaders.AUTHORIZATION;
-    private final String API_AUTH_HEADER_KEY_PREFIX = "KakaoAK";
+    private static final String API_PROTOCOL = "https";
+    private static final String API_HOST = "dapi.kakao.com";
+    private static final String API_AUTH_HEADER_NAME = HttpHeaders.AUTHORIZATION;
+    private static final String API_AUTH_HEADER_KEY_PREFIX = "KakaoAK";
 
-    private final String SEARCH_BOOKS_URI = "/v2/search/book";
+    private static final String SEARCH_BOOKS_URI = "/v2/search/book";
 
-    private final int MAX_PAGE = 50;
+    private static final int MAX_PAGE = 50;
 
     public KakaoOpenApiBookSearcher(RestTemplate restTemplate, String restApiKey) {
 

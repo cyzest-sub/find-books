@@ -9,14 +9,14 @@ public class DefaultAuthUser extends org.springframework.security.core.userdetai
 
     private static final String DEFAULT_ROLE = "ROLE_USER";
 
-    private static final boolean enabled = true;
-    private static final boolean accountNonExpired = true;
-    private static final boolean credentialsNonExpired = true;
-    private static final boolean accountNonLocked = true;
+    private static final boolean ENABLED = true;
+    private static final boolean ACCOUNT_NON_EXPIRED = true;
+    private static final boolean CREDENTIALS_NON_EXPIRED = true;
+    private static final boolean ACCOUNT_NON_LOCKED = true;
 
     public DefaultAuthUser(User user) {
         super(user.getId(), user.getPassword(),
-                enabled, accountNonLocked, credentialsNonExpired, accountNonExpired,
+                ENABLED, ACCOUNT_NON_EXPIRED, CREDENTIALS_NON_EXPIRED, ACCOUNT_NON_LOCKED,
                 Collections.singletonList(new SimpleGrantedAuthority(DEFAULT_ROLE))
         );
     }

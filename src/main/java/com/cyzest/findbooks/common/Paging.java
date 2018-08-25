@@ -1,13 +1,13 @@
 package com.cyzest.findbooks.common;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 public class Paging {
 
-    private final int pageRange = 10;
+    private static final int PAGE_RANGE = 10;
 
     private int page;
     private int size;
@@ -20,7 +20,7 @@ public class Paging {
     }
 
     public int getTotalPage() {
-        if (size == 0 || pageRange == 0) {
+        if (size == 0) {
             return 0;
         }
         if (totalCount == 0) {
@@ -31,33 +31,33 @@ public class Paging {
     }
 
     public int getFirstPage() {
-        if (size == 0 || pageRange == 0) {
+        if (size == 0) {
             return 0;
         }
-        return (page % pageRange == 0) ? page - (pageRange - 1) : ((page / pageRange) * pageRange) + 1;
+        return (page % PAGE_RANGE == 0) ? page - (PAGE_RANGE - 1) : ((page / PAGE_RANGE) * PAGE_RANGE) + 1;
     }
 
     public int getEndPage() {
         int firstPage = getFirstPage();
-        int endPage = firstPage + pageRange - 1;
+        int endPage = firstPage + PAGE_RANGE - 1;
         int totalPage = getTotalPage();
         return endPage > totalPage ? totalPage : endPage;
     }
 
     public int getPrevPageNo() {
-        if (size == 0 || pageRange == 0) {
+        if (size == 0) {
             return 0;
         }
-        int prevPageNo = page - pageRange;
-        return (prevPageNo % pageRange == 0) ? prevPageNo : ((prevPageNo / pageRange) * pageRange) + pageRange;
+        int prevPageNo = page - PAGE_RANGE;
+        return (prevPageNo % PAGE_RANGE == 0) ? prevPageNo : ((prevPageNo / PAGE_RANGE) * PAGE_RANGE) + PAGE_RANGE;
     }
 
     public int getNextPageNo() {
-        if (size == 0 || pageRange == 0) {
+        if (size == 0) {
             return 0;
         }
-        int nextPageNo = page + pageRange;
-        return (nextPageNo % pageRange == 0) ? nextPageNo - (pageRange - 1) : ((nextPageNo / pageRange) * pageRange) + 1;
+        int nextPageNo = page + PAGE_RANGE;
+        return (nextPageNo % PAGE_RANGE == 0) ? nextPageNo - (PAGE_RANGE - 1) : ((nextPageNo / PAGE_RANGE) * PAGE_RANGE) + 1;
     }
 
 }

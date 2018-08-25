@@ -27,6 +27,8 @@ public class KakaoOpenApiBookSearcherTest {
     @Autowired
     private FindBooksProperties findBooksProperties;
 
+    private static final String TEST_TARGET_ISBN = "9788950974329";
+
     @PostConstruct
     public void init() {
         kakaoOpenApiBookSearcher = new KakaoOpenApiBookSearcher(
@@ -37,7 +39,7 @@ public class KakaoOpenApiBookSearcherTest {
     public void 검색파라미터가_없을경우_결과를_만족하는가() {
         BookSearchResult bookSearchResult = kakaoOpenApiBookSearcher.search(null);
         Assert.assertNotNull(bookSearchResult);
-        Assert.assertEquals(bookSearchResult.getTotalCount(), 0);
+        Assert.assertEquals(0, bookSearchResult.getTotalCount());
         Assert.assertNull(bookSearchResult.getBookInfos());
     }
 
@@ -60,21 +62,21 @@ public class KakaoOpenApiBookSearcherTest {
     @Test
     public void ISBN_타겟_검색_결과를_만족하는가() {
         BookSearchParam bookSearchParam = new BookSearchParam();
-        bookSearchParam.setQuery("9788950974329");
+        bookSearchParam.setQuery(TEST_TARGET_ISBN);
         bookSearchParam.setTargetCode("isbn");
         BookSearchResult bookSearchResult = kakaoOpenApiBookSearcher.search(bookSearchParam);
         Assert.assertTrue(bookSearchResult.getTotalCount() > 0);
         Assert.assertNotNull(bookSearchResult.getBookInfos());
         Assert.assertNotNull(bookSearchResult.getBookInfos().get(0));
-        Assert.assertEquals(bookSearchResult.getBookInfos().get(0).getIsbn(), "9788950974329");
+        Assert.assertEquals(TEST_TARGET_ISBN, bookSearchResult.getBookInfos().get(0).getIsbn());
         bookSearchResult.getBookInfos().forEach(bookInfo -> log.info("BookInfo : {}", bookInfo.getIsbn()));
     }
 
     @Test
     public void ISBN_개별_검색_결과를_만족하는가() {
-        BookInfo bookInfo = kakaoOpenApiBookSearcher.searchByIsbn("9788950974329");
+        BookInfo bookInfo = kakaoOpenApiBookSearcher.searchByIsbn(TEST_TARGET_ISBN);
         Assert.assertNotNull(bookInfo);
-        Assert.assertEquals(bookInfo.getIsbn(), "9788950974329");
+        Assert.assertEquals(TEST_TARGET_ISBN, bookInfo.getIsbn());
         log.info("BookInfo : {}", bookInfo.getIsbn());
     }
 
