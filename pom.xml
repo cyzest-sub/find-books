@@ -126,6 +126,14 @@
             <version>3.3.7</version>
         </dependency>
 
+        <!-- POJO Tester -->
+        <dependency>
+            <groupId>pl.pojo</groupId>
+            <artifactId>pojo-tester</artifactId>
+            <version>0.7.6</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <profiles>
