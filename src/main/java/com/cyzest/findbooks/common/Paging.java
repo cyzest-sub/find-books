@@ -19,6 +19,10 @@ public class Paging {
         this.totalCount = totalCount;
     }
 
+    public int getPageRange() {
+        return PAGE_RANGE;
+    }
+
     public int getTotalPage() {
         if (size == 0) {
             return 0;

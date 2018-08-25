@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,6 +40,7 @@ public class BookSearchHistoryService {
         OpenApiBookSearcher openApiBookSearcher = openApiBookSearchHelper.getOpenApiBookSearcher(openApiType);
 
         boolean checkCategoryCode = Optional.ofNullable(openApiBookSearchParam.getCategoryCode())
+                .filter(categoryCode -> !StringUtils.isEmpty(categoryCode))
                 .map(openApiBookSearcher::isAvailableBookSearchCategoryCode).orElse(true);
 
         if (!checkCategoryCode) {
@@ -46,6 +48,7 @@ public class BookSearchHistoryService {
         }
 
         boolean checkTargetCode = Optional.ofNullable(openApiBookSearchParam.getTargetCode())
+                .filter(targetCode -> !StringUtils.isEmpty(targetCode))
                 .map(openApiBookSearcher::isAvailableBookSearchTargetCode).orElse(true);
 
         if (!checkTargetCode) {
