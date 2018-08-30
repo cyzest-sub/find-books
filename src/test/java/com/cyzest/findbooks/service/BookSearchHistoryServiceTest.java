@@ -1,6 +1,5 @@
 package com.cyzest.findbooks.service;
 
-import com.cyzest.findbooks.ExceptedAssert;
 import com.cyzest.findbooks.dao.BookSearchHistory;
 import com.cyzest.findbooks.dao.BookSearchHistoryRepository;
 import com.cyzest.findbooks.dao.User;
@@ -9,15 +8,15 @@ import com.cyzest.findbooks.model.BookSearchHistoryResult;
 import com.cyzest.findbooks.model.OpenApiBookSearchParam;
 import com.cyzest.findbooks.searcher.OpenApiType;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
@@ -25,7 +24,7 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class BookSearchHistoryServiceTest {
 
     @Autowired
@@ -62,7 +61,7 @@ public class BookSearchHistoryServiceTest {
         OpenApiBookSearchParam openApiBookSearchParam = new OpenApiBookSearchParam();
         openApiBookSearchParam.setOpenApiType(OpenApiType.KAKAO);
         openApiBookSearchParam.setCategoryCode("test");
-        ExceptedAssert.assertThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(IllegalArgumentException.class,
                 () -> bookSearchHistoryService.saveHistory(TEST_USER_ID, openApiBookSearchParam));
     }
 
@@ -71,7 +70,7 @@ public class BookSearchHistoryServiceTest {
         OpenApiBookSearchParam openApiBookSearchParam = new OpenApiBookSearchParam();
         openApiBookSearchParam.setOpenApiType(OpenApiType.KAKAO);
         openApiBookSearchParam.setQuery(null);
-        ExceptedAssert.assertThrows(Throwable.class,
+        Assertions.assertThrows(Throwable.class,
                 () -> bookSearchHistoryService.saveHistory(TEST_USER_ID, openApiBookSearchParam));
     }
 
@@ -90,10 +89,10 @@ public class BookSearchHistoryServiceTest {
         BookSearchHistoryResult bookSearchHistoryResult =
                 bookSearchHistoryService.getHistoriesByUserId(TEST_USER_ID, PageRequest.of(1, 10));
 
-        Assert.assertNotNull(bookSearchHistoryResult);
-        Assert.assertEquals(1, bookSearchHistoryResult.getTotalCount());
-        Assert.assertEquals(1, bookSearchHistoryResult.getSearchHistoryInfos().size());
-        Assert.assertEquals("test", bookSearchHistoryResult.getSearchHistoryInfos().get(0).getQuery());
+        Assertions.assertNotNull(bookSearchHistoryResult);
+        Assertions.assertEquals(1, bookSearchHistoryResult.getTotalCount());
+        Assertions.assertEquals(1, bookSearchHistoryResult.getSearchHistoryInfos().size());
+        Assertions.assertEquals("test", bookSearchHistoryResult.getSearchHistoryInfos().get(0).getQuery());
     }
 
 }

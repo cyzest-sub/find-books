@@ -1,8 +1,8 @@
 package com.cyzest.findbooks.common;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class PagingTest {
@@ -16,15 +16,15 @@ public class PagingTest {
                 .totalCount(100)
                 .build();
 
-        Assert.assertEquals(1, paging.getPage());
-        Assert.assertEquals(10, paging.getSize());
-        Assert.assertEquals(100, paging.getTotalCount());
-        Assert.assertEquals(10, paging.getTotalPage());
+        Assertions.assertEquals(1, paging.getPage());
+        Assertions.assertEquals(10, paging.getSize());
+        Assertions.assertEquals(100, paging.getTotalCount());
+        Assertions.assertEquals(10, paging.getTotalPage());
 
-        Assert.assertEquals(10, paging.getPrevPageNo());
-        Assert.assertEquals(1, paging.getFirstPage());
-        Assert.assertEquals(10, paging.getEndPage());
-        Assert.assertEquals(11, paging.getNextPageNo());
+        Assertions.assertEquals(10, paging.getPrevPageNo());
+        Assertions.assertEquals(1, paging.getFirstPage());
+        Assertions.assertEquals(10, paging.getEndPage());
+        Assertions.assertEquals(11, paging.getNextPageNo());
     }
 
     @Test
@@ -36,15 +36,15 @@ public class PagingTest {
                 .totalCount(0)
                 .build();
 
-        Assert.assertEquals(1, paging.getPage());
-        Assert.assertEquals(10, paging.getSize());
-        Assert.assertEquals(0, paging.getTotalCount());
-        Assert.assertEquals(1, paging.getTotalPage());
+        Assertions.assertEquals(1, paging.getPage());
+        Assertions.assertEquals(10, paging.getSize());
+        Assertions.assertEquals(0, paging.getTotalCount());
+        Assertions.assertEquals(1, paging.getTotalPage());
 
-        Assert.assertEquals(10, paging.getPrevPageNo());
-        Assert.assertEquals(1, paging.getFirstPage());
-        Assert.assertEquals(1, paging.getEndPage());
-        Assert.assertEquals(11, paging.getNextPageNo());
+        Assertions.assertEquals(10, paging.getPrevPageNo());
+        Assertions.assertEquals(1, paging.getFirstPage());
+        Assertions.assertEquals(1, paging.getEndPage());
+        Assertions.assertEquals(11, paging.getNextPageNo());
     }
 
     @Test
@@ -52,15 +52,15 @@ public class PagingTest {
 
         Paging paging = new Paging(15, 10, 1000);
 
-        Assert.assertEquals(15, paging.getPage());
-        Assert.assertEquals(10, paging.getSize());
-        Assert.assertEquals(1000, paging.getTotalCount());
-        Assert.assertEquals(100, paging.getTotalPage());
+        Assertions.assertEquals(15, paging.getPage());
+        Assertions.assertEquals(10, paging.getSize());
+        Assertions.assertEquals(1000, paging.getTotalCount());
+        Assertions.assertEquals(100, paging.getTotalPage());
 
-        Assert.assertEquals(10, paging.getPrevPageNo());
-        Assert.assertEquals(11, paging.getFirstPage());
-        Assert.assertEquals(20, paging.getEndPage());
-        Assert.assertEquals(21, paging.getNextPageNo());
+        Assertions.assertEquals(10, paging.getPrevPageNo());
+        Assertions.assertEquals(11, paging.getFirstPage());
+        Assertions.assertEquals(20, paging.getEndPage());
+        Assertions.assertEquals(21, paging.getNextPageNo());
     }
 
     @Test
@@ -72,15 +72,15 @@ public class PagingTest {
                 .totalCount(100)
                 .build();
 
-        Assert.assertEquals(1, paging.getPage());
-        Assert.assertEquals(0, paging.getSize());
-        Assert.assertEquals(100, paging.getTotalCount());
-        Assert.assertEquals(0, paging.getTotalPage());
+        Assertions.assertEquals(1, paging.getPage());
+        Assertions.assertEquals(0, paging.getSize());
+        Assertions.assertEquals(100, paging.getTotalCount());
+        Assertions.assertEquals(0, paging.getTotalPage());
 
-        Assert.assertEquals(0, paging.getPrevPageNo());
-        Assert.assertEquals(0, paging.getFirstPage());
-        Assert.assertEquals(0, paging.getEndPage());
-        Assert.assertEquals(0, paging.getNextPageNo());
+        Assertions.assertEquals(0, paging.getPrevPageNo());
+        Assertions.assertEquals(0, paging.getFirstPage());
+        Assertions.assertEquals(0, paging.getEndPage());
+        Assertions.assertEquals(0, paging.getNextPageNo());
     }
 
 }

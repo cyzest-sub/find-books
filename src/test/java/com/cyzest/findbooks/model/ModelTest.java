@@ -1,10 +1,8 @@
 package com.cyzest.findbooks.model;
 
-import com.cyzest.findbooks.ExceptedAssert;
 import com.cyzest.findbooks.dao.User;
-import org.junit.Assert;
-import org.junit.Test;
-import pl.pojo.tester.api.assertion.Assertions;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ModelTest {
 
@@ -20,21 +18,21 @@ public class ModelTest {
                 OpenApiBookSearchParam.class
         };
 
-        Assertions.assertPojoMethodsForAll(pojoClasses).areWellImplemented();
+        pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsForAll(pojoClasses).areWellImplemented();
     }
 
     @Test
     public void BookMarkSort_객채생성을_검증한다() {
         BookMarkSort bookMarkSort = BookMarkSort.REG_DATE;
-        Assert.assertEquals("regDate,DESC", bookMarkSort.getCode());
-        Assert.assertEquals("시간순", bookMarkSort.getDescription());
+        Assertions.assertEquals("regDate,DESC", bookMarkSort.getCode());
+        Assertions.assertEquals("시간순", bookMarkSort.getDescription());
     }
 
     @Test
     public void DefaultAuthUser_객채생성을_검증한다() {
-        ExceptedAssert.assertThrows(NullPointerException.class,
+        Assertions.assertThrows(NullPointerException.class,
                 () -> new DefaultAuthUser(null));
-        ExceptedAssert.assertThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(IllegalArgumentException.class,
                 () -> new DefaultAuthUser(new User()));
     }
 
