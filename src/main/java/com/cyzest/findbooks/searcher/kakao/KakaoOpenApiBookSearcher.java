@@ -1,6 +1,5 @@
 package com.cyzest.findbooks.searcher.kakao;
 
-import com.cyzest.findbooks.common.BasedModelMapper;
 import com.cyzest.findbooks.searcher.*;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.Conditions;
@@ -55,7 +54,7 @@ public class KakaoOpenApiBookSearcher implements OpenApiBookSearcher {
         this.restTemplate = restTemplate;
         this.restApiKey = restApiKey;
 
-        modelMapper = new BasedModelMapper();
+        modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());

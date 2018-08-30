@@ -26,11 +26,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class BookMarkService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private BookMarkRepository bookMarkRepository;
+    private final BookMarkRepository bookMarkRepository;
 
-    private BookSearchService bookSearchService;
+    private final BookSearchService bookSearchService;
 
     public void saveBookMark(String userId, OpenApiType openApiType, String isbn) throws Exception {
 

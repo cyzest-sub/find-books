@@ -29,11 +29,11 @@ public class BookSearchController {
     private final PropertyEditor openApiTypePropertyEditor = new EnumCodePropertyEditor<>(OpenApiType.class);
     private final PropertyEditor bookSearchSortPropertyEditor = new EnumCodePropertyEditor<>(BookSearchSort.class);
 
-    private BookSearchService bookSearchService;
+    private final BookSearchService bookSearchService;
 
-    private BookSearchHistoryService bookSearchHistoryService;
+    private final BookSearchHistoryService bookSearchHistoryService;
 
-    private OpenApiBookSearchHelper openApiBookSearchHelper;
+    private final OpenApiBookSearchHelper openApiBookSearchHelper;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

@@ -1,10 +1,8 @@
 package com.cyzest.findbooks.searcher;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class BookSearchParam {
 
     private String categoryCode;

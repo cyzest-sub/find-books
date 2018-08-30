@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class BookSearchService {
 
-    private OpenApiBookSearchHelper openApiBookSearchHelper;
+    private final OpenApiBookSearchHelper openApiBookSearchHelper;
 
     public BookSearchResult searchBooks(OpenApiType openApiType, BookSearchParam bookSearchParam) {
         return openApiBookSearchHelper.getOpenApiBookSearcher(openApiType).search(bookSearchParam);

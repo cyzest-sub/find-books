@@ -27,11 +27,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class BookSearchHistoryService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private BookSearchHistoryRepository bookSearchHistoryRepository;
+    private final BookSearchHistoryRepository bookSearchHistoryRepository;
 
-    private OpenApiBookSearchHelper openApiBookSearchHelper;
+    private final OpenApiBookSearchHelper openApiBookSearchHelper;
 
     public void saveHistory(String userId, OpenApiBookSearchParam openApiBookSearchParam) {
 

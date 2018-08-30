@@ -25,7 +25,7 @@ public class BookMarkController {
     private final PropertyEditor openApiTypePropertyEditor = new EnumCodePropertyEditor<>(OpenApiType.class);
     private final PropertyEditor bookMarkSortPropertyEditor = new EnumCodePropertyEditor<>(BookMarkSort.class);
 
-    private BookMarkService bookMarkService;
+    private final BookMarkService bookMarkService;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

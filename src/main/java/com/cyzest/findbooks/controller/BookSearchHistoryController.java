@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @AllArgsConstructor
 public class BookSearchHistoryController {
 
-    private BookSearchHistoryService bookSearchHistoryService;
+    private final BookSearchHistoryService bookSearchHistoryService;
 
     @GetMapping("/history")
     public String getSearchHistories(

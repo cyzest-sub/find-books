@@ -1,6 +1,5 @@
 package com.cyzest.findbooks.searcher.kakao;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.util.StringUtils;
