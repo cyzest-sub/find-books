@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-alpine
 
-COPY find-books-*.jar app.jar
+COPY target/find-books-*.jar app.jar
 
 RUN echo '#!/usr/bin/env sh' >> entrypoint.sh
 RUN echo 'exec java -server -Djava.security.egd=file:/dev/./urandom -DVAULT_TOKEN=$VAULT_TOKEN -jar /app.jar' >> entrypoint.sh
