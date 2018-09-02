@@ -58,3 +58,11 @@ $ java -jar ./target/find-books-1.0.0.jar
 $ mvn package -DVAULT_TOKEN={TOKEN}
 $ java -DVAULT_TOKEN={TOKEN} -jar ./target/find-books-1.0.0.jar
 ```
+
+### 배포 및 실행 (Docker)
+
+```
+$ mvn package -DVAULT_TOKEN={TOKEN}
+$ docker build -t find-books:1.0.0 ./
+$ docker run -d --name find-books -p 8080:8080 -e VAULT_TOKEN="{TOKEN}" find-books:1.0.0
+```
