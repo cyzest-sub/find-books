@@ -22,47 +22,52 @@
 ### Front-end 추가 라이브러리
 1. Bootstrap3 - 화면 구성을 위해 이용
 
+### Vault로 관리하는 설정정보
+```txt
+findbooks.searcher.kakaoApiKey          // Kakao API Key
+findbooks.searcher.naverClientId        // Naver API ID
+findbooks.searcher.naverClientSecret    // Naver API Secret
+spring.datasource.username              // DB User
+spring.datasource.password              // DB User Password
+```
+* Vault 정보를 자신의 환경에 맞게 변경해야 합니다. (bootstrap.properties 에서 수정가능)
+* 테스트 및 실행 시 Java System Property로 Vault Token을 추가해야 합니다.
+
 ### 설치
 
-```
+```console
 $ git clone https://github.com/cyzest-sub/find-books.git
 $ cd find-books
 ```
 
-### 실행 (로컬)
+### 테스트
 
+```console
+$ mvn clean test -DVAULT_TOKEN={VAULT_TOKEN}
 ```
-$ mvn clean compile
-$ mvn spring-boot:run
+
+### 실행 (Local)
+
+```console
+$ mvn clean package -Dmaven.test.skip=true
+$ java -DVAULT_TOKEN={VAULT_TOKEN} -jar ./target/find-books-1.0.0.jar
 ```
 * http://localhost:8080 으로 접속하여 확인
 * 포트는 8080 을 사용합니다. (application.properties 에서 수정가능)
-* Vault 정보를 자신의 환경에 맞게 변경해야 합니다. (bootstrap.properties 에서 수정가능)
 
-### 테스트 (Junit)
+### 실행 (Dev)
 
+```console
+$ mvn clean package -Pdev -Dmaven.test.skip=true
+$ java -DVAULT_TOKEN={VAULT_TOKEN} -Dsentry.dsn={SENTRY_DSN} -jar ./target/find-books-1.0.0.jar
 ```
-$ mvn clean compile test
+* Dev서버는 에러트래킹을 위해 Sentry를 연동
+* Java System Property로 Sentry DSN을 추가해야 합니다.
 
-// Vault 정보 System Property 주입 시
-$ mvn clean compile test -DVAULT_TOKEN={TOKEN}
-```
+### Docker 빌드 및 실행 (Dev)
 
-### 배포 및 실행 (Jar)
-
-```
-$ mvn package
-$ java -jar ./target/find-books-1.0.0.jar
-
-// Vault 정보 System Property 주입 시
-$ mvn package -DVAULT_TOKEN={TOKEN}
-$ java -DVAULT_TOKEN={TOKEN} -jar ./target/find-books-1.0.0.jar
-```
-
-### 배포 및 실행 (Docker)
-
-```
-$ mvn package -DVAULT_TOKEN={TOKEN}
+```console
+$ mvn clean package -Pdev -Dmaven.test.skip=true
 $ docker build -t find-books:1.0.0 ./
-$ docker run -d --name find-books -p 8080:8080 -e VAULT_TOKEN="{TOKEN}" find-books:1.0.0
+$ docker run -d --name find-books -p 8080:8080 -e VAULT_TOKEN="{VAULT_TOKEN}" -e SENTRY_DSN="{SENTRY_DSN}" --link valut find-books:1.0.0
 ```
