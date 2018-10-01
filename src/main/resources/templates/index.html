@@ -3,47 +3,70 @@
 <head>
     <meta charset="UTF-8" />
     <title>Find Books</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/index.js}"></script>
 </head>
 <body>
-<div class="login-page">
-    <div class="form">
-        <form class="register-form" onsubmit="return register();">
-            <input type="text" id="reg_id" placeholder="id" />
-            <input type="password" id="reg_password" placeholder="password" />
-            <input type="password" id="confirm_password" placeholder="confirm password" />
-            <button type="submit">create</button>
-            <p class="message">Already registered? <a href="#">Sign In</a></p>
-        </form>
-        <form class="login-form" action="/login" method="post">
-            <input type="text" placeholder="id" id="id" name="username" value="" />
-            <input type="password" placeholder="password" id="password" name="password" value="" />
-            <button type="submit">login</button>
-            <p class="message">Not registered? <a href="#">Create an account</a></p>
-        </form>
-
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 offset-md-3">
+            <div class="card text-white bg-login">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="#" class="active" id="login-form-link">로그인</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#" id="register-form-link">사용자 등록</a>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <form id="login-form" role="form" style="display: block;" onsubmit="return login();">
+                                <div class="form-group">
+                                    <input type="text" id="id" tabindex="1" class="form-control" placeholder="ID" value="" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="password" tabindex="2" class="form-control" placeholder="Password" />
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6 offset-sm-3">
+                                            <input type="submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="로그인" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <form id="register-form" role="form" style="display: none;" onsubmit="return register();">
+                                <div class="form-group">
+                                    <input type="text" id="reg_id" tabindex="1" class="form-control" placeholder="ID" value="" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="reg_password" tabindex="2" class="form-control" placeholder="Password" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" />
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6 offset-sm-3">
+                                            <input type="submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="등록" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/js/index.js"></script>
-<script th:inline="javascript">
-
-    /*<![CDATA[*/
-
-    $(document).ready(function() {
-
-        var loginError = [[${loginError}]];
-
-        if (loginError) {
-            alert("로그인이 실패하였습니다.");
-        }
-
-    });
-
-    /*]]>*/
-
-</script>
 </body>
 </html>
