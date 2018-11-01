@@ -10,8 +10,7 @@ import java.util.List;
 public enum BookSearchSort implements EnumCode {
 
     ACCURACY("accuracy", "정확도순"),
-    RECENCY("recency", "최신순"),
-    SALES("sales", "판매량순");
+    LATEST("latest", "최신순");
 
     private String code;
     private String description;
@@ -31,7 +30,7 @@ public enum BookSearchSort implements EnumCode {
     }
 
     public static List<BookSearchSort> getBookSearchSorts() {
-        return Arrays.asList(BookSearchSort.ACCURACY, BookSearchSort.RECENCY, BookSearchSort.SALES);
+        return Arrays.asList(BookSearchSort.ACCURACY, BookSearchSort.LATEST);
     }
 
 }

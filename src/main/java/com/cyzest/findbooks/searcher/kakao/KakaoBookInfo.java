@@ -25,9 +25,8 @@ public class KakaoBookInfo {
     @JsonProperty("sale_price")
     private Integer salePrice;
 
-    private String category;
     private String thumbnail;
-    private String barcode;
+    private String status;
 
     public String getThumbnail() {
         return StringUtils.isEmpty(thumbnail) ? EMPTY_IMAGE_URL : thumbnail;

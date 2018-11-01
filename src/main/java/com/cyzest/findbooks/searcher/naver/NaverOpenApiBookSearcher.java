@@ -72,8 +72,7 @@ public class NaverOpenApiBookSearcher implements OpenApiBookSearcher {
         naverSortCodeMap = new ConcurrentHashMap<>();
 
         naverSortCodeMap.put(BookSearchSort.ACCURACY, "sim");
-        naverSortCodeMap.put(BookSearchSort.RECENCY, "date");
-        naverSortCodeMap.put(BookSearchSort.SALES, "count");
+        naverSortCodeMap.put(BookSearchSort.LATEST, "date");
     }
 
     @Override
